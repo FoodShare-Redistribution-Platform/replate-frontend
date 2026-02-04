@@ -157,7 +157,7 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* Impact Stats */}
+            {/* Impact Stats / Problem Statement */}
             <section className="impact-section">
                 <div className="impact-bg"></div>
                 <div className="section-container">
