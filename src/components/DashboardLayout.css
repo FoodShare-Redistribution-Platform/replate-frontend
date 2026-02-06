@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column;
     margin-left: 280px;
+    min-height: 100vh;
 }
 
 .dashboard-content {
@@ -20,6 +21,12 @@
 
 @media (max-width: 1024px) {
     .dashboard-main {
-        margin-left: 0;
+        margin-left: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-main {
+        margin-left: 240px;
     }
 }

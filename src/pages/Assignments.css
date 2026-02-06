@@ -1,0 +1,162 @@
+/* Assignments Page Dark Theme */
+.assignments-container {
+    padding: 24px;
+    width: 100%;
+    color: #e2e8f0;
+}
+
+.assignments-header {
+    margin-bottom: 24px;
+}
+
+.assignments-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+}
+
+.assignments-header p {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #334155;
+    min-height: 140px;
+}
+
+.stat-value {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.stat-value.green {
+    color: #10b981;
+}
+
+.stat-value.red {
+    color: #ef4444;
+}
+
+.stat-value.blue {
+    color: #3b82f6;
+}
+
+.stat-label {
+    color: #94a3b8;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Filter Bar */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.square-btn {
+    width: 40px;
+    height: 40px;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.square-btn:hover {
+    border-color: #10b981;
+}
+
+.dropdown-select {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    height: 40px;
+    outline: none;
+    min-width: 140px;
+    cursor: pointer;
+}
+
+.dropdown-select:focus {
+    border-color: #10b981;
+}
+
+/* Assignments List */
+.assignments-list {
+    display: grid;
+    gap: 16px;
+}
+
+.assignment-card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.assignment-info h4 {
+    color: #e2e8f0;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.assignment-details {
+    display: flex;
+    gap: 12px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.accept-btn {
+    background-color: #10b981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.accept-btn:hover {
+    background-color: #059669;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 0;
+    color: #64748b;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}

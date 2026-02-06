@@ -43,8 +43,8 @@ const Login = () => {
                     role: data.role
                 }));
 
-                // Redirect to profile
-                navigate('/profile');
+                // Redirect to dashboard
+                navigate('/dashboard');
             } else {
                 alert(data.message || 'Login failed');
             }

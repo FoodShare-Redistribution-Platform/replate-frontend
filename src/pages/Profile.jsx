@@ -293,6 +293,15 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Live Map Integration - To be implemented
+                    <div className="profile-card">
+                        <h2 className="card-title">Live Map</h2>
+                        <div className="placeholder-map">
+                            <p>Map integration coming soon...</p>
+                        </div>
+                    </div>
+                    */}
                 </div>
             </div>
         </DashboardLayout>
