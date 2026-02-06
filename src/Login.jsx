@@ -125,6 +125,16 @@ const Login = () => {
                             />
                         </div>
 
+                        <div className="form-actions">
+                            <label className="remember-me">
+                                <input type="checkbox" />
+                                <span>Remember me</span>
+                            </label>
+                            <Link to="/forgot-password" className="forgot-password">
+                                Forgot password?
+                            </Link>
+                        </div>
+
                         <button type="submit" className="btn btn-primary btn-full">
                             Sign In
                         </button>
@@ -133,6 +143,7 @@ const Login = () => {
                             Don't have an account? <Link to="/register" className="link">Create account</Link>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

@@ -145,12 +145,14 @@
     font-weight: 700;
     color: white;
     margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 .form-subtitle {
     font-size: 1rem;
     color: var(--gray-400);
     margin-bottom: 2.5rem;
+    text-align: center;
 }
 
 .form-group {
@@ -227,8 +229,9 @@
 
 .link {
     color: var(--primary-500);
-    font-weight: 500;
+    font-weight: 700;
     transition: color 0.2s;
+    text-decoration: none;
 }
 
 .link:hover {
@@ -312,4 +315,45 @@
     .form-title {
         font-size: 1.75rem;
     }
+
+    .form-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* Extra Login Styles */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    margin-top: -0.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    cursor: pointer;
+}
+
+.remember-me input {
+    accent-color: var(--primary-500);
+    width: 1rem;
+    height: 1rem;
+}
+
+.forgot-password {
+    font-size: 0.875rem;
+    color: var(--primary-500);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: var(--primary-400);
+    text-decoration: underline;
 }
