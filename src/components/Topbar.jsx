@@ -63,7 +63,7 @@ const Topbar = ({ user }) => {
                 </button>
 
                 {/* User Avatar */}
-                <div className="user-avatar-container">
+                <div className="user-avatar-container" onClick={() => window.location.href = '/profile'} style={{ cursor: 'pointer' }}>
                     <div className="user-avatar-small">
                         {getInitials(user?.fullName)}
                     </div>

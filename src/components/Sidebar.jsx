@@ -26,10 +26,10 @@ const Sidebar = ({ user }) => {
         switch (user?.role) {
             case 'donor':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: true },
-                    { name: 'Donate Food', icon: '🍱', path: '/donate', disabled: true },
-                    { name: 'My Donations', icon: '📦', path: '/my-donations', disabled: true },
-                    { name: 'Live Map', icon: '🗺️', path: '/map', disabled: true },
+                    { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: false },
+                    { name: 'Donate Food', icon: '🍱', path: '/donate-food', disabled: false },
+                    { name: 'My Donations', icon: '📦', path: '/my-donations', disabled: false },
+                    { name: 'Live Map', icon: '🗺️', path: '/live-map', disabled: true },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: true },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: true },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
@@ -37,10 +37,10 @@ const Sidebar = ({ user }) => {
 
             case 'ngo':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: true },
-                    { name: 'Available Food', icon: '🍱', path: '/available-food', disabled: true },
-                    { name: 'My Requests', icon: '📋', path: '/my-requests', disabled: true },
-                    { name: 'Live Map', icon: '🗺️', path: '/map', disabled: true },
+                    { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: false },
+                    { name: 'Available Food', icon: '🍱', path: '/available-food', disabled: false },
+                    { name: 'My Requests', icon: '📦', path: '/my-requests', disabled: false },
+                    { name: 'Live Map', icon: '🗺️', path: '/live-map', disabled: true },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: true },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: true },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
@@ -48,11 +48,11 @@ const Sidebar = ({ user }) => {
 
             case 'volunteer':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: true },
-                    { name: 'My Pickups', icon: '🚗', path: '/my-pickups', disabled: true },
-                    { name: 'Assignments', icon: '📝', path: '/assignments', disabled: true },
-                    { name: 'Availability', icon: '⏰', path: '/availability', disabled: true },
-                    { name: 'Live Map', icon: '🗺️', path: '/map', disabled: true },
+                    { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: false },
+                    { name: 'Assignments', icon: '📝', path: '/assignments', disabled: false },
+                    { name: 'My Pickups', icon: '🛵', path: '/my-pickups', disabled: false },
+                    { name: 'Availability', icon: '⏰', path: '/availability', disabled: false },
+                    { name: 'Live Map', icon: '🗺️', path: '/live-map', disabled: true },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: true },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: true },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
