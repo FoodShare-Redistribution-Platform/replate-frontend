@@ -12,6 +12,10 @@ import Assignments from './pages/Assignments';
 import MyPickups from './pages/MyPickups';
 import Availability from './pages/Availability';
 
+// Admin pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+import UserManagement from './pages/admin/UserManagement';
+
 function App() {
   return (
     <BrowserRouter>
@@ -37,6 +41,10 @@ function App() {
         <Route path="/assignments" element={<Assignments />} />
         <Route path="/my-pickups" element={<MyPickups />} />
         <Route path="/availability" element={<Availability />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<UserManagement />} />
       </Routes>
     </BrowserRouter>
   );
