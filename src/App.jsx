@@ -11,6 +11,11 @@ import Dashboard from './pages/Dashboard';
 import Assignments from './pages/Assignments';
 import MyPickups from './pages/MyPickups';
 import Availability from './pages/Availability';
+import AdminUserTable from './components/AdminUserTable';
+import VerificationRequests from './components/VerificationRequests';
+import FoodManagement from './components/FoodManagement';
+import VolunteerManagement from './components/VolunteerManagement';
+import NGOManagement from './components/NGOManagement';
 
 function App() {
   return (
@@ -37,6 +42,20 @@ function App() {
         <Route path="/assignments" element={<Assignments />} />
         <Route path="/my-pickups" element={<MyPickups />} />
         <Route path="/availability" element={<Availability />} />
+
+        {/* Admin User Table */}
+        <Route path="/admin-users" element={<AdminUserTable />} />
+
+        {/* Verification Requests */}
+        <Route path="/verification-requests" element={<VerificationRequests />} />
+
+        {/* Food Management */}
+        <Route path="/food-management" element={<FoodManagement />} />
+
+        {/* Volunteer Management */}
+        <Route path="/volunteer-management" element={<VolunteerManagement />} />
+
+        {/* <Route path="/admin" element={<AdminDashboard />} /> */}
       </Routes>
     </BrowserRouter>
   );
