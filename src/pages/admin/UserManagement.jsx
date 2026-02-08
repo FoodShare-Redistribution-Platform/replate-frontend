@@ -200,7 +200,7 @@ const UserManagement = () => {
     const [deleteModal, setDeleteModal] = useState(null);
     const [detailModal, setDetailModal] = useState(null);
     const [editForm, setEditForm] = useState({});
-    const [addForm, setAddForm] = useState({ email: '', password: '', fullName: '', phone: '', role: 'donor' });
+    const [addForm, setAddForm] = useState({ email: '', password: '', fullName: '', phone: '', role: 'admin', address: '', city: '', state: '', pincode: '', organizationName: '', organizationType: '', registrationNumber: '', dailyCapacity: '' });
     const [actionLoading, setActionLoading] = useState(false);
     const [toast, setToast] = useState(null);
 
@@ -252,6 +252,14 @@ const UserManagement = () => {
         if (verificationFilter) params.verification = verificationFilter;
         setSearchParams(params, { replace: true });
     }, [activeRole, statusFilter, verificationFilter, setSearchParams]);
+
+    // Sync activeRole from URL when navigating via sidebar links
+    useEffect(() => {
+        const roleFromUrl = searchParams.get('role') || 'all';
+        if (roleFromUrl !== activeRole) {
+            setActiveRole(roleFromUrl);
+        }
+    }, [searchParams]);
 
     // Reset page on filter change
     useEffect(() => { setPage(1); }, [activeRole, debouncedSearch, statusFilter, verificationFilter]);
@@ -306,7 +314,7 @@ const UserManagement = () => {
             await createUser(addForm, token);
             showToast('User created successfully');
             setAddModal(false);
-            setAddForm({ email: '', password: '', fullName: '', phone: '', role: 'donor' });
+            setAddForm({ email: '', password: '', fullName: '', phone: '', role: 'admin', address: '', city: '', state: '', pincode: '', organizationName: '', organizationType: '', registrationNumber: '', dailyCapacity: '' });
             fetchUsers();
         } catch (err) {
             showToast(err.response?.data?.message || 'Failed to create user', 'error');
@@ -507,6 +515,14 @@ const UserManagement = () => {
                                                     <button onClick={() => setDetailModal(u)} className="p-1.5 rounded-lg text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all" title="View"><Eye size={15} /></button>
                                                     <button onClick={() => openEditModal(u)} className="p-1.5 rounded-lg text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 transition-all" title="Edit"><Pencil size={15} /></button>
                                                     <button
+                                                        onClick={() => handleVerificationChange(u._id, u.verificationStatus === 'approved' ? 'pending' : 'approved')}
+                                                        disabled={actionLoading}
+                                                        className={`p-1.5 rounded-lg transition-all ${u.verificationStatus === 'approved' ? 'text-emerald-400 hover:text-amber-400 hover:bg-amber-500/10' : 'text-amber-400 hover:text-emerald-400 hover:bg-emerald-500/10'}`}
+                                                        title={u.verificationStatus === 'approved' ? 'Unverify' : 'Verify'}
+                                                    >
+                                                        <CheckCircle2 size={15} className={u.verificationStatus === 'approved' ? '' : 'opacity-50'} />
+                                                    </button>
+                                                    <button
                                                         onClick={() => handleToggleStatus(u._id)}
                                                         disabled={actionLoading}
                                                         className={`p-1.5 rounded-lg transition-all ${u.status === 'active' ? 'text-slate-400 hover:text-orange-400 hover:bg-orange-500/10' : 'text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10'}`}
@@ -545,11 +561,12 @@ const UserManagement = () => {
                                 <FormInput label="Password" required type="password" value={addForm.password} onChange={(e) => setAddForm({ ...addForm, password: e.target.value })} placeholder="Min 6 characters" />
                                 <FormInput label="Phone" type="tel" value={addForm.phone} onChange={(e) => setAddForm({ ...addForm, phone: e.target.value })} placeholder="+91 98765 43210" />
                                 <FormSelect label="Role" required value={addForm.role} onChange={(e) => setAddForm({ ...addForm, role: e.target.value })}>
-                                    <option value="donor">Donor</option>
-                                    <option value="ngo">NGO</option>
-                                    <option value="volunteer">Volunteer</option>
                                     <option value="admin">Admin</option>
                                 </FormSelect>
+                                <FormInput label="Address" type="text" value={addForm.address} onChange={(e) => setAddForm({ ...addForm, address: e.target.value })} placeholder="123 Main St" />
+                                <FormInput label="City" type="text" value={addForm.city} onChange={(e) => setAddForm({ ...addForm, city: e.target.value })} placeholder="Mumbai" />
+                                <FormInput label="State" type="text" value={addForm.state} onChange={(e) => setAddForm({ ...addForm, state: e.target.value })} placeholder="Maharashtra" />
+                                <FormInput label="Pincode" type="text" value={addForm.pincode} onChange={(e) => setAddForm({ ...addForm, pincode: e.target.value })} placeholder="400001" />
                             </div>
                             <div className="flex justify-end gap-3 pt-3 border-t border-slate-800">
                                 <button type="button" onClick={() => setAddModal(false)} className="px-4 py-2.5 text-sm text-slate-400 bg-slate-800 hover:bg-slate-700 rounded-lg transition-all">Cancel</button>

@@ -34,13 +34,22 @@ const Login = () => {
             const data = await response.json();
 
             if (response.ok) {
+                // Check verification status
+                if (data.verificationStatus !== 'approved' && data.role !== 'admin') {
+                    alert(`Your account is ${data.verificationStatus}. Please wait for admin approval before accessing the system.`);
+                    setLoading(false);
+                    return;
+                }
+
                 // Store token and user data
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify({
                     _id: data._id,
                     email: data.email,
                     fullName: data.fullName,
-                    role: data.role
+                    role: data.role,
+                    verificationStatus: data.verificationStatus,
+                    status: data.status
                 }));
 
                 // Redirect admin to admin dashboard, others to user dashboard

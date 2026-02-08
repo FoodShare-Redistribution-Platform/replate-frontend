@@ -76,7 +76,8 @@ const Sidebar = ({ user }) => {
         if (path.includes('?')) {
             return location.pathname + location.search === path;
         }
-        return location.pathname === path;
+        // For paths without query params, only match if URL also has no query params
+        return location.pathname === path && !location.search;
     };
 
     const menuItems = getMenuItems();
