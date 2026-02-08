@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import Login from './Login';
@@ -45,3 +46,58 @@ function App() {
 }
 
 export default App;
+=======
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './LandingPage';
+import Login from './Login';
+import Register from './Register';
+import Profile from './pages/Profile';
+import DonateFood from './pages/DonateFood';
+import MyDonations from './pages/MyDonations';
+import AvailableFood from './pages/AvailableFood';
+import MyRequests from './pages/MyRequests';
+import Dashboard from './pages/Dashboard';
+import Assignments from './pages/Assignments';
+import MyPickups from './pages/MyPickups';
+import Availability from './pages/Availability';
+
+// Admin pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+import UserManagement from './pages/admin/UserManagement';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Main Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/profile" element={<Profile />} />
+
+        {/* Donor Routes */}
+        <Route path="/donate-food" element={<DonateFood />} />
+        <Route path="/my-donations" element={<MyDonations />} />
+
+        {/* NGO Routes */}
+        <Route path="/available-food" element={<AvailableFood />} />
+        <Route path="/my-requests" element={<MyRequests />} />
+
+        {/* Volunteer Routes */}
+        <Route path="/assignments" element={<Assignments />} />
+        <Route path="/my-pickups" element={<MyPickups />} />
+        <Route path="/availability" element={<Availability />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<UserManagement />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+>>>>>>> d9f179565dedd4fc43489aaf77c6eea62967c2ca
