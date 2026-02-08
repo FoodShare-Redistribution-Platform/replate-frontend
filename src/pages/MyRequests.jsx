@@ -18,7 +18,7 @@ const MyRequests = () => {
     const fetchUser = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/users/me', {
+            const response = await fetch('http://localhost:5001/api/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -35,7 +35,7 @@ const MyRequests = () => {
     const fetchRequests = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/requests', {
+            const response = await fetch('http://localhost:5001/api/requests', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -54,7 +54,7 @@ const MyRequests = () => {
     const handleAccept = async (requestId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/requests/${requestId}/accept`, {
+            const response = await fetch(`http://localhost:5001/api/requests/${requestId}/accept`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -78,7 +78,7 @@ const MyRequests = () => {
     const handlePickup = async (requestId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/requests/${requestId}/pickup`, {
+            const response = await fetch(`http://localhost:5001/api/requests/${requestId}/pickup`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -102,7 +102,7 @@ const MyRequests = () => {
     const handleDeliver = async (requestId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/requests/${requestId}/deliver`, {
+            const response = await fetch(`http://localhost:5001/api/requests/${requestId}/deliver`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -128,7 +128,7 @@ const MyRequests = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/requests/${requestId}/cancel`, {
+            const response = await fetch(`http://localhost:5001/api/requests/${requestId}/cancel`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

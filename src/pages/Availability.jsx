@@ -31,7 +31,7 @@ const Availability = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/users/me', {
+            const response = await fetch('http://localhost:5001/api/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -74,7 +74,7 @@ const Availability = () => {
     const handleSave = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/assignments/volunteer-profile', {
+            const response = await fetch('http://localhost:5001/api/assignments/volunteer-profile', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const Availability = () => {
         // Save these empty/default values to DB
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/assignments/volunteer-profile', {
+            const response = await fetch('http://localhost:5001/api/assignments/volunteer-profile', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

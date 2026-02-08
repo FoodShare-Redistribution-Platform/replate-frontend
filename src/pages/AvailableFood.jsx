@@ -19,7 +19,7 @@ const AvailableFood = () => {
     const fetchUser = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/users/me', {
+            const response = await fetch('http://localhost:5001/api/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -36,7 +36,7 @@ const AvailableFood = () => {
     const fetchAvailableDonations = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/donations/available', {
+            const response = await fetch('http://localhost:5001/api/donations/available', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -55,7 +55,7 @@ const AvailableFood = () => {
     const handleRequestFood = async (donationId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/requests', {
+            const response = await fetch('http://localhost:5001/api/requests', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

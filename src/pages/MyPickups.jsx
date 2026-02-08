@@ -24,7 +24,7 @@ const MyPickups = () => {
             const user = JSON.parse(userStr);
             const userId = user?.id || user?._id;
 
-            const response = await fetch(`http://localhost:5000/api/assignments/volunteer/${userId}`, {
+            const response = await fetch(`http://localhost:5001/api/assignments/volunteer/${userId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -53,8 +53,8 @@ const MyPickups = () => {
 
     const handleStatusUpdate = async (assignmentId, action) => {
         const endpoint = action === 'pickup'
-            ? `http://localhost:5000/api/assignments/${assignmentId}/update-location` // Using update-location to trigger transit
-            : `http://localhost:5000/api/assignments/${assignmentId}/complete`;
+            ? `http://localhost:5001/api/assignments/${assignmentId}/update-location` // Using update-location to trigger transit
+            : `http://localhost:5001/api/assignments/${assignmentId}/complete`;
 
         const body = action === 'pickup'
             ? { lat: 12.9716, lng: 77.5946 } // Default to Bangalore coordinates

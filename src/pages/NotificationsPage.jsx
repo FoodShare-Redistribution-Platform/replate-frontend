@@ -18,7 +18,7 @@ const NotificationsPage = () => {
     const fetchNotifications = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/notifications', {
+            const response = await fetch('http://localhost:5001/api/notifications', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -35,7 +35,7 @@ const NotificationsPage = () => {
     const markAsRead = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/notifications/${id}/read`, {
+            const response = await fetch(`http://localhost:5001/api/notifications/${id}/read`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -50,7 +50,7 @@ const NotificationsPage = () => {
     const markAllAsRead = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/notifications/read-all', {
+            const response = await fetch('http://localhost:5001/api/notifications/read-all', {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

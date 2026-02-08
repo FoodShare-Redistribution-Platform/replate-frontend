@@ -24,7 +24,7 @@ const Profile = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/users/me', {
+            const response = await fetch('http://localhost:5001/api/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -69,7 +69,7 @@ const Profile = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:5000/api/users/me', {
+            const response = await fetch('http://localhost:5001/api/users/me', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
