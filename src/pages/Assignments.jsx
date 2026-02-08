@@ -127,11 +127,11 @@ const Assignments = () => {
                         {assignments.map(assign => (
                             <div key={assign._id} className="assignment-card">
                                 <div className="assignment-info">
-                                    <h4>{assign.foodItem || 'Food Donation'}</h4>
+                                    <h4>{assign.foodName || 'Food Donation'}</h4>
                                     <div className="assignment-details">
                                         <span>📍 {assign.pickupAddress || 'Unknown Location'}</span>
                                         <span>•</span>
-                                        <span>⚖️ {assign.quantity} kg</span>
+                                        <span>⚖️ {assign.quantity} {assign.unit || 'kg'}</span>
                                     </div>
                                 </div>
                                 <button

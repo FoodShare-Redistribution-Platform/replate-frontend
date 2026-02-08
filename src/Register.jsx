@@ -22,7 +22,19 @@ const Register = () => {
         address: '',
         city: '',
         state: '',
-        pincode: ''
+        pincode: '',
+        // Volunteer specific
+        vehicleType: 'two_wheeler',
+        maxWeight: '',
+        availabilitySchedule: {
+            mon: { active: true, slots: [{ start: '09:00', end: '17:00' }] },
+            tue: { active: true, slots: [{ start: '09:00', end: '17:00' }] },
+            wed: { active: true, slots: [{ start: '09:00', end: '17:00' }] },
+            thu: { active: true, slots: [{ start: '09:00', end: '17:00' }] },
+            fri: { active: true, slots: [{ start: '09:00', end: '17:00' }] },
+            sat: { active: false, slots: [] },
+            sun: { active: false, slots: [] }
+        }
     });
 
     const handleChange = (e) => {
@@ -68,7 +80,15 @@ const Register = () => {
                     address: formData.address,
                     city: formData.city,
                     state: formData.state,
-                    pincode: formData.pincode
+                    pincode: formData.pincode,
+                    // Include volunteer fields if applicable
+                    ...(formData.role === 'volunteer' && {
+                        volunteerProfile: {
+                            vehicleType: formData.vehicleType,
+                            maxWeight: formData.maxWeight,
+                            availabilitySchedule: formData.availabilitySchedule
+                        }
+                    })
                 })
             });
 
@@ -369,6 +389,71 @@ const Register = () => {
                                                 placeholder="100"
                                                 required
                                             />
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* Conditional Fields for Volunteer */}
+                                {formData.role === 'volunteer' && (
+                                    <>
+                                        <div className="form-group" style={{ marginBottom: '1rem' }}>
+                                            <label htmlFor="vehicleType">Vehicle Type</label>
+                                            <select
+                                                id="vehicleType"
+                                                name="vehicleType"
+                                                value={formData.vehicleType}
+                                                onChange={handleChange}
+                                                required
+                                            >
+                                                <option value="bicycle">Bicycle</option>
+                                                <option value="two_wheeler">Two Wheeler</option>
+                                                <option value="car">Car</option>
+                                                <option value="van">Van</option>
+                                            </select>
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1rem' }}>
+                                            <label htmlFor="maxWeight">Delivery Capacity (kg)</label>
+                                            <input
+                                                type="number"
+                                                id="maxWeight"
+                                                name="maxWeight"
+                                                value={formData.maxWeight}
+                                                onChange={handleChange}
+                                                placeholder="e.g. 10"
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className="form-group" style={{ marginBottom: '1rem' }}>
+                                            <label>Weekly Schedule</label>
+                                            <p className="field-hint" style={{ fontSize: '12px', color: '#64748b' }}>Select active days (times can be adjusted later)</p>
+                                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px' }}>
+                                                {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map(day => (
+                                                    <div key={day} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                        <input
+                                                            type="checkbox"
+                                                            id={`day-${day}`}
+                                                            checked={formData.availabilitySchedule[day].active}
+                                                            onChange={(e) => {
+                                                                const isActive = e.target.checked;
+                                                                setFormData(prev => ({
+                                                                    ...prev,
+                                                                    availabilitySchedule: {
+                                                                        ...prev.availabilitySchedule,
+                                                                        [day]: {
+                                                                            ...prev.availabilitySchedule[day],
+                                                                            active: isActive,
+                                                                            slots: isActive ? [{ start: '09:00', end: '17:00' }] : []
+                                                                        }
+                                                                    }
+                                                                }));
+                                                            }}
+                                                        />
+                                                        <label htmlFor={`day-${day}`} style={{ textTransform: 'capitalize', fontSize: '13px', marginBottom: 0 }}>{day}</label>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </>
                                 )}

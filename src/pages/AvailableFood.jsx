@@ -101,7 +101,13 @@ const AvailableFood = () => {
         const matchesSearch = donation.foodName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             donation.foodType.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesFilter = filterType === 'all' || donation.foodType === filterType;
-        return matchesSearch && matchesFilter;
+
+        // Exclude expired
+        const expiry = new Date(`${donation.expiryDate}T${donation.expiryTime}`);
+        const now = new Date();
+        const isExpired = expiry < now;
+
+        return matchesSearch && matchesFilter && !isExpired;
     });
 
     if (loading) {

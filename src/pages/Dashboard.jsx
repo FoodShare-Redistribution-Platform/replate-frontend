@@ -92,22 +92,21 @@ const Dashboard = () => {
                     </div>
                 )}
 
-                {/* VOLUNTEER DASHBOARD - DISABLED
+                {/* VOLUNTEER DASHBOARD */}
                 {user?.role === 'volunteer' && (
                     <div className="role-dashboard">
                         <div className="stats-grid">
                             <div className="stat-card">
                                 <div className="stat-icon">🛵</div>
                                 <div className="stat-content">
-                                    <h3>Assignments</h3>
-                                    <p className="stat-helper">Available delivery tasks</p>
-                                    <button className="btn-link" disabled>Disabled</button>
+                                    <h3>Available Assignments</h3>
+                                    <p className="stat-helper">View pickup tasks</p>
+                                    <button className="btn-link" onClick={() => navigate('/assignments')}>View All →</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
-                */}
             </div>
         </DashboardLayout>
     );
