@@ -43,8 +43,12 @@ const Login = () => {
                     role: data.role
                 }));
 
-                // Redirect to dashboard
-                navigate('/dashboard');
+                // Redirect admin to admin dashboard, others to user dashboard
+                if (data.role === 'admin') {
+                    navigate('/admin');
+                } else {
+                    navigate('/dashboard');
+                }
             } else {
                 alert(data.message || 'Login failed');
             }

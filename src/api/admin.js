@@ -1,89 +1,72 @@
-// src/api/admin.js
 import axios from 'axios';
 
-// Base URL for admin backend routes
-const API_URL = 'http://localhost:5000/admin';
+const API_URL = 'http://localhost:5000/api/admin';
 
-// ------------------ Users ------------------
-export const getUsers = async (token) => {
-  const res = await axios.get(`${API_URL}/users`, {
+const authHeader = (token) => ({
     headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
+});
+
+// ─── Dashboard ─────────────────────────────────────────────────────
+export const getDashboardStats = async (token) => {
+    const res = await axios.get(`${API_URL}/stats`, authHeader(token));
+    return res.data;
 };
 
-// ------------------ Verification Requests ------------------
-export const getVerificationRequests = async (token) => {
-  const res = await axios.get(`${API_URL}/requests`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
+// ─── Users CRUD ────────────────────────────────────────────────────
+export const getUsers = async (token, params = {}) => {
+    const res = await axios.get(`${API_URL}/users`, {
+        ...authHeader(token),
+        params,
+    });
+    return res.data; // { users, total, page, pages }
 };
 
-export const approveRequest = async (id, token) => {
-  const res = await axios.put(
-    `${API_URL}/requests/${id}/approve`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  return res.data;
+export const getUserById = async (id, token) => {
+    const res = await axios.get(`${API_URL}/users/${id}`, authHeader(token));
+    return res.data;
 };
 
-export const rejectRequest = async (id, token) => {
-  const res = await axios.put(
-    `${API_URL}/requests/${id}/reject`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  return res.data;
+export const createUser = async (data, token) => {
+    const res = await axios.post(`${API_URL}/users`, data, authHeader(token));
+    return res.data;
 };
 
-// ------------------ Food Donations ------------------
+export const updateUser = async (id, data, token) => {
+    const res = await axios.put(`${API_URL}/users/${id}`, data, authHeader(token));
+    return res.data;
+};
+
+export const deleteUser = async (id, token) => {
+    const res = await axios.delete(`${API_URL}/users/${id}`, authHeader(token));
+    return res.data;
+};
+
+export const toggleUserStatus = async (id, token) => {
+    const res = await axios.put(`${API_URL}/users/${id}/toggle-status`, {}, authHeader(token));
+    return res.data;
+};
+
+export const updateVerificationStatus = async (id, verificationStatus, token) => {
+    const res = await axios.put(
+        `${API_URL}/users/${id}/verification`,
+        { verificationStatus },
+        authHeader(token)
+    );
+    return res.data;
+};
+
+// ─── Resources ─────────────────────────────────────────────────────
 export const getDonations = async (token) => {
-  const res = await axios.get(`${API_URL}/donations`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
+    const res = await axios.get(`${API_URL}/donations`, authHeader(token));
+    return res.data;
 };
 
-export const markFoodUnsafe = async (id, token) => {
-  const res = await axios.put(
-    `${API_URL}/donations/${id}/unsafe`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  return res.data;
+export const getRequests = async (token) => {
+    const res = await axios.get(`${API_URL}/requests`, authHeader(token));
+    return res.data;
 };
 
-// ------------------ Volunteers ------------------
-export const getVolunteers = async (token) => {
-  const res = await axios.get(`${API_URL}/assignments/volunteers`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
-};
-
-// ------------------ NGOs ------------------
-export const getNGOs = async (token) => {
-  const res = await axios.get(`${API_URL}/ngos`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
-};
-
-// ------------------ Logistics / Assignments ------------------
 export const getAssignments = async (token) => {
-  const res = await axios.get(`${API_URL}/assignments`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
-};
-
-export const markAssignmentDelayed = async (id, token) => {
-  const res = await axios.put(
-    `${API_URL}/assignments/${id}/delay`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  return res.data;
+    const res = await axios.get(`${API_URL}/assignments`, authHeader(token));
+    return res.data;
 };
