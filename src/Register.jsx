@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UtensilsCrossed } from 'lucide-react';
 import './Register.css';
 
 const Register = () => {
@@ -39,10 +40,7 @@ const Register = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleNext = () => {
@@ -62,7 +60,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const response = await fetch('http://localhost:5001/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -119,7 +117,6 @@ const Register = () => {
                         </div>
                         <h1 className="brand-name">FoodShare</h1>
                     </div>
-
                     <div className="mission-text">
                         <h2>Join the Movement to End Food Waste</h2>
                         <p>Connect surplus food with communities in need. Together, we can make a difference.</p>
@@ -162,6 +159,13 @@ const Register = () => {
             {/* Right Side - Form */}
             <div className="register-right">
                 <div className="form-container">
+                    <div className="mobile-header">
+                        <div className="logo-icon-mobile">
+                            <UtensilsCrossed size={24} />
+                        </div>
+                        <h1 className="brand-name-mobile">FoodShare</h1>
+                    </div>
+
                     {/* Step Indicator */}
                     <div className="step-indicator">
                         <div className={`step ${currentStep >= 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}>
@@ -197,8 +201,10 @@ const Register = () => {
                         {/* Step 1: Create Account */}
                         {currentStep === 1 && (
                             <div className="form-step">
-                                <h2 className="form-title">Create Account</h2>
-                                <p className="form-subtitle">Start your journey with FoodShare</p>
+                                <div className="step-header">
+                                    <h2 className="form-title">Create Account</h2>
+                                    <p className="form-subtitle">Start your journey with FoodShare</p>
+                                </div>
 
                                 <div className="form-group">
                                     <label htmlFor="email">Email address</label>
@@ -252,8 +258,10 @@ const Register = () => {
                         {/* Step 2: Your Details */}
                         {currentStep === 2 && (
                             <div className="form-step">
-                                <h2 className="form-title">Your Details</h2>
-                                <p className="form-subtitle">Tell us about yourself</p>
+                                <div className="step-header">
+                                    <h2 className="form-title">Your Details</h2>
+                                    <p className="form-subtitle">Tell us about yourself</p>
+                                </div>
 
                                 <div className="form-group">
                                     <label htmlFor="fullName">Full name</label>
@@ -283,18 +291,20 @@ const Register = () => {
 
                                 <div className="form-group">
                                     <label htmlFor="role">I am registering as</label>
-                                    <select
-                                        id="role"
-                                        name="role"
-                                        value={formData.role}
-                                        onChange={handleChange}
-                                        required
-                                    >
-                                        <option value="">Select your role</option>
-                                        <option value="donor">Donor (Restaurant / Hotel / Caterer)</option>
-                                        <option value="ngo">NGO / Shelter / Community Kitchen</option>
-                                        <option value="volunteer">Volunteer</option>
-                                    </select>
+                                    <div className="select-wrapper">
+                                        <select
+                                            id="role"
+                                            name="role"
+                                            value={formData.role}
+                                            onChange={handleChange}
+                                            required
+                                        >
+                                            <option value="">Select your role</option>
+                                            <option value="donor">Donor (Restaurant / Hotel / Caterer)</option>
+                                            <option value="ngo">NGO / Shelter / Community Kitchen</option>
+                                            <option value="volunteer">Volunteer</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 {/* Conditional Fields for Donor */}
@@ -315,19 +325,21 @@ const Register = () => {
 
                                         <div className="form-group">
                                             <label htmlFor="organizationType">Organization type</label>
-                                            <select
-                                                id="organizationType"
-                                                name="organizationType"
-                                                value={formData.organizationType}
-                                                onChange={handleChange}
-                                                required
-                                            >
-                                                <option value="">Select type</option>
-                                                <option value="restaurant">Restaurant</option>
-                                                <option value="hotel">Hotel</option>
-                                                <option value="caterer">Caterer</option>
-                                                <option value="other">Other</option>
-                                            </select>
+                                            <div className="select-wrapper">
+                                                <select
+                                                    id="organizationType"
+                                                    name="organizationType"
+                                                    value={formData.organizationType}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value="">Select type</option>
+                                                    <option value="restaurant">Restaurant</option>
+                                                    <option value="hotel">Hotel</option>
+                                                    <option value="caterer">Caterer</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </>
                                 )}
@@ -350,19 +362,21 @@ const Register = () => {
 
                                         <div className="form-group">
                                             <label htmlFor="organizationType">Organization type</label>
-                                            <select
-                                                id="organizationType"
-                                                name="organizationType"
-                                                value={formData.organizationType}
-                                                onChange={handleChange}
-                                                required
-                                            >
-                                                <option value="">Select type</option>
-                                                <option value="ngo">NGO</option>
-                                                <option value="shelter">Shelter</option>
-                                                <option value="community_kitchen">Community Kitchen</option>
-                                                <option value="other">Other</option>
-                                            </select>
+                                            <div className="select-wrapper">
+                                                <select
+                                                    id="organizationType"
+                                                    name="organizationType"
+                                                    value={formData.organizationType}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value="">Select type</option>
+                                                    <option value="ngo">NGO</option>
+                                                    <option value="shelter">Shelter</option>
+                                                    <option value="community_kitchen">Community Kitchen</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div className="form-group">
@@ -396,23 +410,25 @@ const Register = () => {
                                 {/* Conditional Fields for Volunteer */}
                                 {formData.role === 'volunteer' && (
                                     <>
-                                        <div className="form-group" style={{ marginBottom: '1rem' }}>
+                                        <div className="form-group">
                                             <label htmlFor="vehicleType">Vehicle Type</label>
-                                            <select
-                                                id="vehicleType"
-                                                name="vehicleType"
-                                                value={formData.vehicleType}
-                                                onChange={handleChange}
-                                                required
-                                            >
-                                                <option value="bicycle">Bicycle</option>
-                                                <option value="two_wheeler">Two Wheeler</option>
-                                                <option value="car">Car</option>
-                                                <option value="van">Van</option>
-                                            </select>
+                                            <div className="select-wrapper">
+                                                <select
+                                                    id="vehicleType"
+                                                    name="vehicleType"
+                                                    value={formData.vehicleType}
+                                                    onChange={handleChange}
+                                                    required
+                                                >
+                                                    <option value="bicycle">Bicycle</option>
+                                                    <option value="two_wheeler">Two Wheeler</option>
+                                                    <option value="car">Car</option>
+                                                    <option value="van">Van</option>
+                                                </select>
+                                            </div>
                                         </div>
 
-                                        <div className="form-group" style={{ marginBottom: '1rem' }}>
+                                        <div className="form-group">
                                             <label htmlFor="maxWeight">Delivery Capacity (kg)</label>
                                             <input
                                                 type="number"
@@ -425,36 +441,7 @@ const Register = () => {
                                             />
                                         </div>
 
-                                        <div className="form-group" style={{ marginBottom: '1rem' }}>
-                                            <label>Weekly Schedule</label>
-                                            <p className="field-hint" style={{ fontSize: '12px', color: '#64748b' }}>Select active days (times can be adjusted later)</p>
-                                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px' }}>
-                                                {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map(day => (
-                                                    <div key={day} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                                        <input
-                                                            type="checkbox"
-                                                            id={`day-${day}`}
-                                                            checked={formData.availabilitySchedule[day].active}
-                                                            onChange={(e) => {
-                                                                const isActive = e.target.checked;
-                                                                setFormData(prev => ({
-                                                                    ...prev,
-                                                                    availabilitySchedule: {
-                                                                        ...prev.availabilitySchedule,
-                                                                        [day]: {
-                                                                            ...prev.availabilitySchedule[day],
-                                                                            active: isActive,
-                                                                            slots: isActive ? [{ start: '09:00', end: '17:00' }] : []
-                                                                        }
-                                                                    }
-                                                                }));
-                                                            }}
-                                                        />
-                                                        <label htmlFor={`day-${day}`} style={{ textTransform: 'capitalize', fontSize: '13px', marginBottom: 0 }}>{day}</label>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
+
                                     </>
                                 )}
 
@@ -472,8 +459,10 @@ const Register = () => {
                         {/* Step 3: Location */}
                         {currentStep === 3 && (
                             <div className="form-step">
-                                <h2 className="form-title">Location</h2>
-                                <p className="form-subtitle">Where are you located?</p>
+                                <div className="step-header">
+                                    <h2 className="form-title">Location</h2>
+                                    <p className="form-subtitle">Where are you located?</p>
+                                </div>
 
                                 <div className="form-group">
                                     <label htmlFor="address">Full address</label>

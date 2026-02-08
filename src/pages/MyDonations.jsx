@@ -35,7 +35,7 @@ const MyDonations = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/users/me', {
+            const response = await fetch('http://localhost:5001/api/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -60,7 +60,7 @@ const MyDonations = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:5000/api/donations', {
+            const response = await fetch('http://localhost:5001/api/donations', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -346,7 +346,7 @@ const MyDonations = () => {
                                                         if (window.confirm(`Are you sure you want to delete "${donation.foodName}"? This action cannot be undone.`)) {
                                                             try {
                                                                 const token = localStorage.getItem('token');
-                                                                const response = await fetch(`http://localhost:5000/api/donations/${donation._id}`, {
+                                                                const response = await fetch(`http://localhost:5001/api/donations/${donation._id}`, {
                                                                     method: 'DELETE',
                                                                     headers: {
                                                                         'Authorization': `Bearer ${token}`

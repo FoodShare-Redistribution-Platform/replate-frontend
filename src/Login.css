@@ -188,6 +188,39 @@
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gray-400);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.remember-me input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-500);
+}
+
+.forgot-password {
+    color: var(--primary-500);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
 /* Buttons */
 .btn {
     padding: 0.875rem 1.5rem;
@@ -239,7 +272,6 @@
     text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
     .login-container {
         flex-direction: column;
@@ -255,53 +287,15 @@
         padding: 2rem;
     }
 
-    .brand-content {
-        max-width: 100%;
-        min-height: auto;
-    }
-
     .welcome-text h2 {
         font-size: 2rem;
-    }
-
-    .stats-section {
-        gap: 1.5rem;
-    }
-
-    .login-right {
-        padding: 2rem;
     }
 }
 
 @media (max-width: 640px) {
-    .login-left {
-        padding: 1.5rem;
-        min-height: 350px;
-    }
-
-    .logo-section {
-        margin-bottom: 2rem;
-    }
-
-    .welcome-text h2 {
-        font-size: 1.75rem;
-    }
-
-    .welcome-text p {
-        font-size: 1rem;
-    }
-
     .stats-section {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-    }
-
-    .stat-number {
-        font-size: 1.5rem;
-    }
-
-    .stat-label {
-        font-size: 0.75rem;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .login-right {
@@ -311,49 +305,4 @@
     .login-form {
         padding: 2rem 1.5rem;
     }
-
-    .form-title {
-        font-size: 1.75rem;
-    }
-
-    .form-title {
-        font-size: 1.75rem;
-    }
-}
-
-/* Extra Login Styles */
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    margin-top: -0.5rem;
-}
-
-.remember-me {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: var(--gray-400);
-    cursor: pointer;
-}
-
-.remember-me input {
-    accent-color: var(--primary-500);
-    width: 1rem;
-    height: 1rem;
-}
-
-.forgot-password {
-    font-size: 0.875rem;
-    color: var(--primary-500);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.forgot-password:hover {
-    color: var(--primary-400);
-    text-decoration: underline;
 }
