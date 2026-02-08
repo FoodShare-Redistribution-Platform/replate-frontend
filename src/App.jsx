@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Assignments from './pages/Assignments';
 import MyPickups from './pages/MyPickups';
 import Availability from './pages/Availability';
+import NotificationsPage from './pages/NotificationsPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/profile" element={<Profile />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
 
         {/* Donor Routes */}
         <Route path="/donate-food" element={<DonateFood />} />

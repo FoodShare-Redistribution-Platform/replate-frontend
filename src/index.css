@@ -52,8 +52,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--gray-800);
-  background-color: var(--white);
+  color: var(--gray-300);
+  background-color: var(--dark-bg);
   line-height: 1.6;
 }
 

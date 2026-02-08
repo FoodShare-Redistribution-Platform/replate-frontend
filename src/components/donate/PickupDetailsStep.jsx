@@ -67,10 +67,15 @@ const PickupDetailsStep = ({ formData, updateFormData }) => {
                             id="pickupDeadline"
                             value={formData.pickupDeadline || ''}
                             onChange={(e) => updateFormData({ pickupDeadline: e.target.value })}
-                            className="form-input"
+                            className={`form-input ${formData.pickupDeadline && formData.expiryDate && formData.expiryTime && new Date(formData.pickupDeadline) >= new Date(`${formData.expiryDate}T${formData.expiryTime}`) ? 'input-error' : ''}`}
                             required
                         />
                         <p className="field-hint">Latest time food can be picked up</p>
+                        {formData.pickupDeadline && formData.expiryDate && formData.expiryTime && new Date(formData.pickupDeadline) >= new Date(`${formData.expiryDate}T${formData.expiryTime}`) && (
+                            <p className="error-text" style={{ color: '#ef4444', fontSize: '12px', marginTop: '4px' }}>
+                                ⚠️ Pickup deadline must be before food expiry time!
+                            </p>
+                        )}
                     </div>
 
                     <div className="form-group">

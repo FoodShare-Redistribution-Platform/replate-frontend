@@ -11,6 +11,7 @@
     flex-direction: column;
     margin-left: 280px;
     min-height: 100vh;
+    background-color: var(--dark-bg);
 }
 
 .dashboard-content {

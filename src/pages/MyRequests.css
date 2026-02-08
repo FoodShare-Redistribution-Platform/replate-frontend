@@ -251,10 +251,13 @@
 /* Empty State */
 .empty-state {
     text-align: center;
-    padding: 4rem 2rem;
-    background: #1e293b;
+    padding: 60px 40px;
+    background-color: #1e293b;
     border: 1px solid #334155;
-    border-radius: 12px;
+    border-radius: 16px;
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 40px auto;
 }
 
 .empty-icon {

@@ -10,6 +10,7 @@ const Availability = () => {
     // Form State
     const [isAvailable, setIsAvailable] = useState(false);
     const [vehicleType, setVehicleType] = useState('two_wheeler');
+    const [maxWeight, setMaxWeight] = useState(10);
     const [serviceRadius, setServiceRadius] = useState(5);
     const [preferredAreas, setPreferredAreas] = useState(['Koramangala', 'Indiranagar']);
     const [schedule, setSchedule] = useState({
@@ -50,6 +51,9 @@ const Availability = () => {
                         if (userData.volunteerProfile.preferredAreas?.length > 0) {
                             setPreferredAreas(userData.volunteerProfile.preferredAreas);
                         }
+                        if (userData.volunteerProfile.maxWeight !== undefined) {
+                            setMaxWeight(userData.volunteerProfile.maxWeight);
+                        }
                         if (userData.volunteerProfile.availabilitySchedule) {
                             // Ensure schedule has all days even if backend is partial
                             setSchedule(prev => ({
@@ -79,6 +83,7 @@ const Availability = () => {
                 body: JSON.stringify({
                     isAvailable,
                     vehicleType,
+                    maxWeight,
                     serviceRadius,
                     preferredAreas,
                     availabilitySchedule: schedule
@@ -195,10 +200,10 @@ const Availability = () => {
                         </div>
                     </div>
                     <div className="stat-card">
-                        <div className="stat-icon">🌍</div>
+                        <div className="stat-icon">⚖️</div>
                         <div className="stat-info">
-                            <h3>{preferredAreas.length}</h3>
-                            <span>Preferred Areas</span>
+                            <h3>{maxWeight} kg</h3>
+                            <span>Max Capacity</span>
                         </div>
                     </div>
                 </div>
@@ -235,7 +240,7 @@ const Availability = () => {
                             <div className="vehicle-grid">
                                 <div
                                     className={`vehicle-option ${vehicleType === 'bicycle' ? 'selected' : ''}`}
-                                    onClick={() => setVehicleType('bicycle')}
+                                    onClick={() => { setVehicleType('bicycle'); setMaxWeight(5); }}
                                 >
                                     <div className="vehicle-icon">🚲</div>
                                     <div className="vehicle-name">Bicycle</div>
@@ -243,7 +248,7 @@ const Availability = () => {
                                 </div>
                                 <div
                                     className={`vehicle-option ${vehicleType === 'two_wheeler' ? 'selected' : ''}`}
-                                    onClick={() => setVehicleType('two_wheeler')}
+                                    onClick={() => { setVehicleType('two_wheeler'); setMaxWeight(10); }}
                                 >
                                     <div className="vehicle-icon">🛵</div>
                                     <div className="vehicle-name">Two Wheeler</div>
@@ -251,7 +256,7 @@ const Availability = () => {
                                 </div>
                                 <div
                                     className={`vehicle-option ${vehicleType === 'car' ? 'selected' : ''}`}
-                                    onClick={() => setVehicleType('car')}
+                                    onClick={() => { setVehicleType('car'); setMaxWeight(50); }}
                                 >
                                     <div className="vehicle-icon">🚗</div>
                                     <div className="vehicle-name">Car</div>
@@ -259,7 +264,7 @@ const Availability = () => {
                                 </div>
                                 <div
                                     className={`vehicle-option ${vehicleType === 'van' ? 'selected' : ''}`}
-                                    onClick={() => setVehicleType('van')}
+                                    onClick={() => { setVehicleType('van'); setMaxWeight(200); }}
                                 >
                                     <div className="vehicle-icon">🚚</div>
                                     <div className="vehicle-name">Van</div>

@@ -2,6 +2,31 @@ import React from 'react';
 import './Topbar.css';
 
 const Topbar = ({ user }) => {
+    const [unreadCount, setUnreadCount] = React.useState(0);
+
+    React.useEffect(() => {
+        const fetchUnreadCount = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const response = await fetch('http://localhost:5000/api/notifications/unread-count', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    setUnreadCount(data.count);
+                }
+            } catch (error) {
+                console.error('Error fetching unread count:', error);
+            }
+        };
+
+        fetchUnreadCount();
+        const interval = setInterval(fetchUnreadCount, 10000); // Poll every 10s
+        return () => clearInterval(interval);
+    }, []);
+
     const getInitials = (name) => {
         if (!name) return '?';
         const names = name.split(' ');
@@ -13,8 +38,6 @@ const Topbar = ({ user }) => {
 
     return (
         <div className="topbar">
-
-
             {/* Right Section */}
             <div className="topbar-right">
                 {/* Theme Toggle */}
@@ -42,12 +65,18 @@ const Topbar = ({ user }) => {
                 </button>
 
                 {/* Notifications */}
-                <button className="icon-btn notification-btn" title="Notifications">
+                <button
+                    className="icon-btn notification-btn"
+                    title="Notifications"
+                    onClick={() => window.location.href = '/notifications'}
+                >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                         <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                     </svg>
-                    <span className="notification-badge">3</span>
+                    {unreadCount > 0 && (
+                        <span className="notification-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
+                    )}
                 </button>
 
                 {/* User Avatar */}

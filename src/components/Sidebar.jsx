@@ -30,7 +30,7 @@ const Sidebar = ({ user }) => {
                     { name: 'Donate Food', icon: '🍱', path: '/donate-food', disabled: false },
                     { name: 'My Donations', icon: '📦', path: '/my-donations', disabled: false },
                     { name: 'Live Map', icon: '🗺️', path: '/live-map', disabled: true },
-                    { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: true },
+                    { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: true },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
                 ];
@@ -41,7 +41,7 @@ const Sidebar = ({ user }) => {
                     { name: 'Available Food', icon: '🍱', path: '/available-food', disabled: false },
                     { name: 'My Requests', icon: '📦', path: '/my-requests', disabled: false },
                     { name: 'Live Map', icon: '🗺️', path: '/live-map', disabled: true },
-                    { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: true },
+                    { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: true },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
                 ];
@@ -53,7 +53,7 @@ const Sidebar = ({ user }) => {
                     { name: 'My Pickups', icon: '🛵', path: '/my-pickups', disabled: false },
                     { name: 'Availability', icon: '⏰', path: '/availability', disabled: false },
                     { name: 'Live Map', icon: '🗺️', path: '/live-map', disabled: true },
-                    { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: true },
+                    { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: true },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
                 ];

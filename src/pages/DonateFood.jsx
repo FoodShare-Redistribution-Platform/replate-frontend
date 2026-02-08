@@ -131,7 +131,9 @@ const DonateFood = () => {
                 return formData.hygiene.safeHandling && formData.hygiene.temperatureControl &&
                     formData.hygiene.properPackaging && formData.hygiene.noContamination;
             case 4:
-                return formData.pickupAddress && formData.city && formData.pickupDeadline;
+                const isDeadlineValid = !formData.pickupDeadline || !formData.expiryDate || !formData.expiryTime ||
+                    new Date(formData.pickupDeadline) < new Date(`${formData.expiryDate}T${formData.expiryTime}`);
+                return formData.pickupAddress && formData.city && formData.pickupDeadline && isDeadlineValid;
             default:
                 return false;
         }
