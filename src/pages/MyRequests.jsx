@@ -293,14 +293,14 @@ const MyRequests = () => {
                                         <span className="detail-icon">📅</span>
                                         <span>{new Date(request.requestedAt).toLocaleDateString()}</span>
                                     </div>
-                                    {request.donation?.assignedTo && (
+                                    {(request.volunteer || request.donation?.assignedTo) && (
                                         <div className="detail-row" style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px dashed #334155' }}>
                                             <span className="detail-icon">🛵</span>
                                             <span>
-                                                Volunteer: <strong style={{ color: '#10b981' }}>{request.donation.assignedTo.fullName}</strong>
+                                                Volunteer: <strong style={{ color: '#10b981' }}>{request.volunteer?.fullName || request.donation?.assignedTo?.fullName}</strong>
                                                 <br />
                                                 <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginLeft: '1.5rem' }}>
-                                                    📞 {request.donation.assignedTo.phone}
+                                                    📞 {request.volunteer?.phone || request.donation?.assignedTo?.phone}
                                                 </span>
                                             </span>
                                         </div>

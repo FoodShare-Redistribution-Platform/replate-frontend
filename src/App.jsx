@@ -14,6 +14,14 @@ import Availability from './pages/Availability';
 import NotificationsPage from './pages/NotificationsPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
+import VolunteerLiveMapPage from "./pages/VolunteerMap";
+import VolunteerMap from "./pages/VolunteerMap";
+
+
+
+
+
+
 
 function App() {
   return (
@@ -45,6 +53,16 @@ function App() {
         <Route path="/assignments" element={<Assignments />} />
         <Route path="/my-pickups" element={<MyPickups />} />
         <Route path="/availability" element={<Availability />} />
+        {/* 🔴 LIVE MAP ROUTE */}
+        <Route
+          path="/live-map/:assignmentId"
+          element={<VolunteerMap />}
+        />
+
+
+
+
+
       </Routes>
     </BrowserRouter>
   );
