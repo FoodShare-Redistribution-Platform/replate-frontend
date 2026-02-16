@@ -1,166 +1,152 @@
 # Replate Frontend Developer Documentation
 
-This repository contains the frontend application for FoodShare/Replate, a platform connecting food donors with NGOs and volunteers. The application is built with React, Vite, and Tailwind CSS.
+## Table of Contents
 
-## 🏗️ Architecture
+1. [Introduction](#introduction)
+2. [About the Project](#about-the-project)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Running Tests](#running-tests)
+6. [Compatibility](#compatibility)
+7. [Project Structure Overview](#project-structure-overview)
+8. [Security Design Notes](#security-design-notes)
+9. [Limitations](#limitations)
+10. [Project Support](#project-support)
+11. [License](#license)
 
-The application is structured around a component-based architecture using React functional components and hooks.
+## Introduction
 
--   **State Management**: React `useState`, `useEffect`, and Context API for global state (Auth).
--   **Routing**: `react-router-dom` for client-side navigation.
--   **API Integration**: `axios` for HTTP requests to the backend.
--   **Styling**: Utility-first CSS with `Tailwind CSS`.
+Welcome to the frontend documentation for **FoodShare/Replate**. This application serves as the client-side interface for connecting food donors with NGOs and volunteers, facilitating the efficient redistribution of surplus food. It provides a responsive and interactive user experience for all platform roles: Donors, NGOs, and Volunteers.
 
-## 🛠️ Technology Stack
+## About the Project
 
--   **Framework**: React (v18+)
--   **Build Tool**: Vite (Fast, optimized bundler)
--   **Styling**: Tailwind CSS
--   **Maps**: Leaflet / React-Leaflet (Interactive maps)
--   **Icons**: Lucide React
--   **Linting**: ESLint
+Replate is a community-driven platform designed to reduce food waste and help those in need. The frontend is built with modern web technologies to ensure performance, scalability, and ease of maintenance.
 
-## 📋 Prerequisites
+### Key Features
+*   **Role-Based Access**: Specialized interfaces for Donors (manage donations), NGOs (request food), and Volunteers (pickup & delivery).
+*   **Interactive Maps**: Real-time visualization of donation pickup locations using Leaflet.
+*   **Responsive Design**: Optimized for both desktop and mobile devices using Tailwind CSS.
+*   **Real-time Updates**: Dynamic status tracking for donations and deliveries.
 
--   [Node.js](https://nodejs.org/) installed (v16+)
+### tech Stack
+*   **Framework**: React (v18+) with Vite
+*   **Styling**: Tailwind CSS
+*   **State Management**: React `useState`, `useEffect`, Context API
+*   **Routing**: `react-router-dom`
+*   **HTTP Client**: `axios`
+*   **Maps**: `react-leaflet`
 
-## 🚀 Getting Started
+## Installation
 
-### 1. Clone the Repository
+Follow these steps to set up the development environment.
 
-```bash
-git clone <repository-url>
-cd replate-frontend
-```
+### Prerequisites
+*   [Node.js](https://nodejs.org/) (v16 or higher)
+*   npm or yarn package manager
 
-### 2. Install Dependencies
+### Steps
+1.  **Clone the Repository**
+    ```bash
+    git clone <repository-url>
+    cd replate-frontend
+    ```
 
-```bash
-npm install
-```
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-### 3. Environment Configuration
+3.  **Environment Configuration**
+    Create a `.env` file in the root directory if you need to override defaults:
+    ```env
+    VITE_API_URL=http://localhost:5001
+    ```
+    *Default configuration assumes the backend is running on port 5001.*
 
-(Optional) If you need to point to a custom backend URL (e.g., production), create a `.env` file in the root:
+## Usage
 
-```env
-VITE_API_URL=http://localhost:5001
-```
-
-*Note: Default configuration assumes backend running on `http://localhost:5001`.*
-
-### 4. Running the Development Server
-
-Start the local server with hot module replacement:
-
+### Development Server
+Start the local development server with hot-reloading:
 ```bash
 npm run dev
 ```
+The application will be accessible at `http://localhost:5173`.
 
-The application will be available at `http://localhost:5173`.
-
-### 5. Deployment Build
-
-Create an optimized production build:
-
+### Production Build
+To create an optimized build for deployment:
 ```bash
 npm run build
 ```
-
-Preview the production build locally:
-
+You can preview the production build locally using:
 ```bash
 npm run preview
 ```
 
-## 📂 Project Structure
+## Running Tests
 
-| Directory | Purpose |
-| :--- | :--- |
-| `src/api/` | API integration logic (`axios` instances) |
-| `src/assets/` | Static assets (Images, Logos) |
-| `src/components/` | Reusable UI components (Buttons, Modals, navbars) |
-| `src/pages/` | Unique page views (Dashboard, Profile, Login) |
-| `src/icons/` | Custom icon components |
-| `src/App.jsx` | Main application component & Routing setup |
-| `src/main.jsx` | Application entry point |
-| `public/` | Public static files (favicon, manifest) |
+The project uses **Playwright** for End-to-End (E2E) testing.
 
-## 🌟 Key Features & Pages
+### Setup
+Ensure Playwright browsers are installed:
+```bash
+npx playwright install
+```
 
-### Authentication
--   **Login/Register**: Secure access for Donors, Volunteers, and NGOs (`pages/Login.jsx`, `pages/Register.jsx`).
-
-### Dashboard (`pages/Dashboard.jsx`)
--   **Overview**: Summary of user activity.
--   **Statistics**: Visual representation of contributions.
-
-### For Donors
--   **Donate Food** (`pages/DonateFood.jsx`): Form to list available food items.
--   **My Donations** (`pages/MyDonations.jsx`): History of past donations.
-
-### For NGOs
--   **Available Food** (`pages/AvailableFood.jsx`): List of available donations to request.
--   **My Requests** (`pages/MyRequests.jsx`): Status of requested food items.
-
-### For Volunteers
--   **Volunteer Map** (`pages/VolunteerMap.jsx`): Interactive map showing pickup locations.
--   **My Pickups** (`pages/MyPickups.jsx`): Management of assigned delivery tasks.
-
-### Admin Panel (`pages/admin/`)
--   **User Management**: Oversee all platform users.
--   **System Config**: Platform-wide settings.
--   **Data Verification**: `components/VerificationRequests.jsx` for verifying NGO credentials.
-
-## 🧪 Testing
-
-The project uses [Playwright](https://playwright.dev/) for End-to-End (E2E) testing.
-
-### Test Files
-Located in `tests/` directory:
--   `login.spec.js`: Verifies authentication flows.
--   `dashboard.spec.js`: Tests dashboard rendering and navigation.
--   `adminDashboard.spec.js`: Checks admin-specific functionalities.
--   `availableFood.spec.js`: Tests the donation listing page.
-
-### Running Tests
-
-1.  **Install Playwright Browsers** (First time only):
-
-    ```bash
-    npx playwright install
-    ```
-
-2.  **Run All Tests**:
-
+### Execution
+*   **Run All Tests**:
     ```bash
     npx playwright test
     ```
-
-3.  **Run with UI Mode** (Interactive):
-
+*   **Interactive UI Mode**:
     ```bash
     npx playwright test --ui
     ```
-
-4.  **View Verification Report**:
-
+*   **View Report**:
     ```bash
     npx playwright show-report
     ```
 
 ### Linting
-
-To check for code quality issues:
-
+To check for code quality and style issues:
 ```bash
 npm run lint
 ```
 
-## 🤝 Contributing
+## Compatibility
 
-1.  Fork the repository
-2.  Create your feature branch (`git checkout -b feature/NewComponent`)
-3.  Commit your changes (`git commit -m 'Add NewComponent'`)
-4.  Push to the branch (`git push origin feature/NewComponent`)
-5.  Open a Pull Request
+*   **Browsers**: Chrome, Firefox, Safari, Edge (Latest versions)
+*   **Node.js**: Requires Node.js v16.x or higher for development tools.
+*   **OS**: Cross-platform (Windows, macOS, Linux).
+
+## Project Structure Overview
+
+| Directory | Description |
+| :--- | :--- |
+| `src/api/` | Axios instances and API call functions. |
+| `src/assets/` | Static assets like images and logos. |
+| `src/components/` | Reusable UI components (Buttons, Modals, Navbars). |
+| `src/pages/` | Unique page views (Dashboard, DonateFood, Login). |
+| `src/icons/` | Custom icon components (using Lucide React). |
+| `src/App.jsx` | Main application component and routing configuration. |
+| `src/main.jsx` | Application entry point. |
+| `public/` | Public static files (favicon, manifest.json). |
+| `tests/` | Playwright E2E test specifications. |
+
+## Security Design Notes
+
+*   **Authentication**: Uses JWT (JSON Web Tokens) stored in `localStorage` (for this demo version) to manage user sessions.
+*   **Authorization**: Route protection ensures users can only access pages relevant to their role (Donor, NGO, Volunteer, Admin).
+*   **Data Protection**: All API requests to protected endpoints include the Authorization header.
+
+## Limitations
+
+*   **Maps**: Location services rely on loose address matching; integration with a real Geocoding API (like Google Maps API) requires valid API keys in production.
+*   **Persistence**: Browser refresh may reset non-persisted local state if not handled by the backend or local storage.
+
+## Project Support
+
+For issues, feature requests, or contributions, please open an issue in the repository or contact the development team.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
