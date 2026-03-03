@@ -1,0 +1,180 @@
+.impact-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.impact-header {
+    margin-bottom: 3rem;
+}
+
+.impact-header h1 {
+    font-size: 2rem;
+    color: #f1f5f9;
+    margin-bottom: 0.25rem;
+}
+
+.impact-header .subtitle {
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
+
+.impact-content h2 {
+    color: #f1f5f9;
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #334155;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metric-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-4px);
+    border-color: #10b981;
+}
+
+.card-social:hover {
+    border-color: #3498db;
+}
+
+.card-enviro:hover {
+    border-color: #2ecc71;
+}
+
+.card-econ:hover {
+    border-color: #f1c40f;
+}
+
+.card-efficiency:hover {
+    border-color: #9b59b6;
+}
+
+.card-admin:hover {
+    border-color: #e74c3c;
+}
+
+.metric-icon {
+    font-size: 1.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 0.25rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* User Logs Table Styles */
+.user-logs-table-container {
+    overflow-x: auto;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.user-logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.user-logs-table th,
+.user-logs-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #334155;
+}
+
+.user-logs-table th {
+    background: rgba(255, 255, 255, 0.02);
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.user-logs-table tr:last-child td {
+    border-bottom: none;
+}
+
+.user-logs-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.user-logs-table td {
+    color: #f1f5f9;
+    font-size: 0.875rem;
+}
+
+.user-logs-table .user-role-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.user-role-badge.donor {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.user-role-badge.ngo {
+    background: rgba(245, 158, 11, 0.1);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.user-role-badge.volunteer {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}

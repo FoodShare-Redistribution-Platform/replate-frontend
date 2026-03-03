@@ -16,6 +16,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
 import VolunteerLiveMapPage from "./pages/VolunteerMap";
 import VolunteerMap from "./pages/VolunteerMap";
+import Impact from './pages/Impact';
 
 
 
@@ -36,6 +37,7 @@ function App() {
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/impact" element={<Impact />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminDashboard />} />
