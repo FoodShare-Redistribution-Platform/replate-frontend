@@ -56,7 +56,7 @@ const Sidebar = ({ user }) => {
                     { name: 'My Donations', icon: '📦', path: '/my-donations', disabled: false },
                     { name: 'Live Map', icon: '🗺️', disabled: true },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
-                    { name: 'Impact', icon: '📈', disabled: true },
+                    { name: 'Impact', icon: '📈', path: '/impact', disabled: false },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
                 ];
 
@@ -67,7 +67,7 @@ const Sidebar = ({ user }) => {
                     { name: 'My Requests', icon: '📦', path: '/my-requests', disabled: false },
                     { name: 'Live Map', icon: '🗺️', disabled: true },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
-                    { name: 'Impact', icon: '📈', disabled: true },
+                    { name: 'Impact', icon: '📈', path: '/impact', disabled: false },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
                 ];
 
@@ -79,7 +79,7 @@ const Sidebar = ({ user }) => {
                     { name: 'Availability', icon: '⏰', path: '/availability', disabled: false },
                     { name: 'Live Map', icon: '🗺️', isLiveMap: true },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
-                    { name: 'Impact', icon: '📈', disabled: true },
+                    { name: 'Impact', icon: '📈', path: '/impact', disabled: false },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
                 ];
 
@@ -91,7 +91,8 @@ const Sidebar = ({ user }) => {
                     { name: 'NGOs', icon: '🏢', path: '/admin/users?role=ngo', disabled: false },
                     { name: 'Volunteers', icon: '🚴', path: '/admin/users?role=volunteer', disabled: false },
                     { name: 'Donations', icon: '📦', disabled: true },
-                    { name: 'Assignments', icon: '🚚', disabled: true }
+                    { name: 'Assignments', icon: '🚚', disabled: true },
+                    { name: 'Impact', icon: '📈', path: '/impact', disabled: false }
                 ];
             default:
                 return [];
