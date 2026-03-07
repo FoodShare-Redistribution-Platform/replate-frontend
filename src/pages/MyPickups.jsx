@@ -15,6 +15,8 @@ const MyPickups = () => {
             setUser(JSON.parse(storedUser));
         }
         fetchPickups();
+        const interval = setInterval(fetchPickups, 5000);
+        return () => clearInterval(interval);
     }, []);
 
     const fetchPickups = async () => {
@@ -175,23 +177,16 @@ const MyPickups = () => {
                                         </div>
                                     </div>
                                     <div className="pickup-actions">
-                                        {['accepted', 'assigned'].includes(pickup.status) && (
-                                            <button
-                                                className="action-btn btn-pickup"
-                                                onClick={() => handleStatusUpdate(pickup._id, 'pickup')}
-                                            >
-                                                Mark Picked Up
-                                            </button>
-                                        )}
-                                        {pickup.status === 'in_transit' && (
-                                            <button
-                                                className="action-btn btn-deliver"
-                                                onClick={() => handleStatusUpdate(pickup._id, 'deliver')}
-                                            >
-                                                Mark Delivered
-                                            </button>
-                                        )}
-                                    </div>
+                                    {pickup.status !== "completed" && (
+                                        <div className="pickup-phase">
+                                        {pickup.status === "assigned" || pickup.status === "accepted"
+                                            ? "Awaiting Pickup"
+                                            : pickup.status === "in_transit"
+                                            ? "Delivering"
+                                            : pickup.status}
+                                        </div>
+                                    )}
+</div>
                                 </div>
                             ))
                         )}

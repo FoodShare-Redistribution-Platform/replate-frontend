@@ -11,7 +11,7 @@ const Sidebar = ({ user }) => {
         navigate('/login');
     };
 
-    // 🔴 ADD THIS FUNCTION
+
     const handleLiveMapClick = async () => {
         try {
             const token = localStorage.getItem("token");
@@ -38,6 +38,30 @@ const Sidebar = ({ user }) => {
         }
     };
 
+    const handleTrackingClick = async () => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+            "http://localhost:5001/api/assignments/volunteer-active",
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+        );
+
+        if (!res.ok) {
+            alert("No active delivery");
+            return;
+        }
+
+        const assignment = await res.json();
+
+        navigate(`/tracking/${assignment._id}`);
+    } catch (err) {
+        console.error(err);
+        alert("Unable to open live tracking");
+    }
+};
     const getInitials = (name) => {
         if (!name) return '?';
         const names = name.split(' ');
@@ -54,7 +78,7 @@ const Sidebar = ({ user }) => {
                     { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: false },
                     { name: 'Donate Food', icon: '🍱', path: '/donate-food', disabled: false },
                     { name: 'My Donations', icon: '📦', path: '/my-donations', disabled: false },
-                    { name: 'Live Map', icon: '🗺️', disabled: true },
+                    { name: 'Live Map', icon: '🗺️', isTracking: true  },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: false },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
@@ -65,7 +89,7 @@ const Sidebar = ({ user }) => {
                     { name: 'Dashboard', icon: '📊', path: '/dashboard', disabled: false },
                     { name: 'Available Food', icon: '🍱', path: '/available-food', disabled: false },
                     { name: 'My Requests', icon: '📦', path: '/my-requests', disabled: false },
-                    { name: 'Live Map', icon: '🗺️', disabled: true },
+                    { name: 'Live Map', icon: '🗺️', isTracking: true  },
                     { name: 'Notifications', icon: '🔔', path: '/notifications', disabled: false },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: false },
                     { name: 'Profile', icon: '👤', path: '/profile', disabled: false }
@@ -90,6 +114,7 @@ const Sidebar = ({ user }) => {
                     { name: 'Donors', icon: '🤝', path: '/admin/users?role=donor', disabled: false },
                     { name: 'NGOs', icon: '🏢', path: '/admin/users?role=ngo', disabled: false },
                     { name: 'Volunteers', icon: '🚴', path: '/admin/users?role=volunteer', disabled: false },
+                    { name: 'Fleet Map', icon: '🗺️', path: '/admin/live-map' },
                     { name: 'Donations', icon: '📦', disabled: true },
                     { name: 'Assignments', icon: '🚚', disabled: true },
                     { name: 'Impact', icon: '📈', path: '/impact', disabled: false }
@@ -143,6 +168,19 @@ const Sidebar = ({ user }) => {
                                 key={index}
                                 className="nav-item"
                                 onClick={handleLiveMapClick}
+                            >
+                                <span className="nav-icon">{item.icon}</span>
+                                <span className="nav-text">{item.name}</span>
+                            </div>
+                        );
+                    }
+                    // 🔵 DONOR / NGO LIVE TRACKING
+                    if (item.isTracking) {
+                        return (
+                            <div
+                                key={index}
+                                className="nav-item"
+                                onClick={handleTrackingClick}
                             >
                                 <span className="nav-icon">{item.icon}</span>
                                 <span className="nav-text">{item.name}</span>

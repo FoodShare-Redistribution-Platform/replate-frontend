@@ -4,7 +4,7 @@ import { vehicleIcon, sourceIcon, destinationIcon } from "../icons/icons";
 import "./VolunteerMap.css";
 import { useParams } from "react-router-dom";
 
-// ✅ Robust Geocoder
+// Robust Geocoder
 async function geocode(address) {
   const res = await fetch(
     `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
@@ -72,6 +72,15 @@ function VolunteerMap() {
         if (!res.ok) throw new Error("Failed to load map data");
         const data = await res.json();
 
+        // 🔹 Sync UI phase with backend status
+        if (data.status === "completed") {
+          setPhase("completed");
+        } else if (data.status === "in_transit") {
+          setPhase("to_destination");
+        } else if (data.status === "accepted") {
+          setPhase("waiting_start");
+        }
+
         const donor = data.donorLocation?.lat
           ? data.donorLocation
           : await geocode(data.donorAddress);
@@ -100,15 +109,16 @@ function VolunteerMap() {
     load();
   }, [assignmentId, token]);
 
-  // ✅ Reset animation index on phase change
+  // Reset animation index on phase change
   useEffect(() => {
     setIndex(0);
   }, [phase]);
 
-  // 🔹 Animation
+  //Animation
   useEffect(() => {
-    if (!path.length || phase === "waiting_start" || phase === "completed")
-      return;
+    if (!path.length || phase === "waiting_start" || phase === "completed") {
+  return;
+}
 
     const interval = setInterval(() => {
       if (index < path.length) {
@@ -121,9 +131,16 @@ function VolunteerMap() {
           setShowModal(true);
           setPhase("waiting_pickup");
         } else if (phase === "to_destination") {
-          setShowModal(true);
-          setPhase("completed");
+    setShowModal(true);
+    setPhase("completed");
+    fetch(`http://localhost:5001/api/assignments/${assignmentId}/complete`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
         }
+    });
+}
       }
     }, 200);
 
@@ -176,7 +193,7 @@ function VolunteerMap() {
         <MapContainer center={volunteerPos} zoom={14} className="map-container">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-          {/* ✅ VEHICLE FIRST */}
+          {/*  VEHICLE FIRST */}
           <Marker position={volunteerPos} icon={vehicleIcon} />
 
           <Marker position={source} icon={sourceIcon} />
