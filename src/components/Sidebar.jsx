@@ -33,6 +33,26 @@ const Sidebar = ({ user }) => {
         }
     }, [navigate]);
 
+    const handleTrackingClick = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+        "http://localhost:5001/api/assignments/volunteer-active",
+        {
+            headers: { Authorization: `Bearer ${token}` }
+        }
+    );
+
+    if (!res.ok) {
+        alert("No active delivery");
+        return;
+    }
+
+    const assignment = await res.json();
+
+    navigate(`/tracking/${assignment._id}`);
+};
+
     const getInitials = (name) => {
         if (!name) return '?';
         const names = name.split(' ');
@@ -49,7 +69,7 @@ const Sidebar = ({ user }) => {
                     { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
                     { name: t('sidebar.donateFood', 'Donate Food'), enName: 'donate food', icon: '🍱', path: '/donate-food' },
                     { name: t('sidebar.myDonations', 'My Donations'), enName: 'my donations', icon: '📦', path: '/my-donations' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️',  isTracking: true },
                     { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
                     { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
                     { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
@@ -59,7 +79,7 @@ const Sidebar = ({ user }) => {
                     { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
                     { name: t('sidebar.availableFood', 'Available Food'), enName: 'available food', icon: '🍱', path: '/available-food' },
                     { name: t('sidebar.myRequests', 'My Requests'), enName: 'my requests', icon: '📦', path: '/my-requests' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️',  isTracking: true },
                     { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
                     { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
                     { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
@@ -84,6 +104,7 @@ const Sidebar = ({ user }) => {
                     { name: t('sidebar.volunteers', 'Volunteers'), enName: 'volunteers', icon: '🚴', path: '/admin/users?role=volunteer' },
                     { name: t('sidebar.donations', 'Donations'), enName: 'donations', icon: '📦', disabled: true },
                     { name: t('sidebar.assignments', 'Assignments'), enName: 'assignments', icon: '🚚', disabled: true },
+                     { name: t('sidebar.liveMap', 'Fleet Map'), enName: 'live map', icon: '🗺️',  path: '/admin/live-map'},
                     { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' }
                 ];
             default:
@@ -141,10 +162,12 @@ const Sidebar = ({ user }) => {
             <div className="user-info">
                 <div className="user-avatar">{getInitials(user?.fullName)}</div>
                 <div className="user-details">
-                    <h3>{user?.fullName || 'User'}</h3>
-                    <p className="user-role">
-                        {user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Role'}
-                    </p>
+                    <h3>{user?.role === "admin" ? "System Admin" : user?.fullName}</h3>
+
+<p className="user-role">
+{user?.role === "admin" ? "Admin" :
+user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
+</p>
                 </div>
             </div>
 
@@ -166,6 +189,18 @@ const Sidebar = ({ user }) => {
                             </div>
                         );
                     }
+                    if (item.isTracking) {
+                            return (
+                                <div
+                                key={index}
+                                className="nav-item"
+                                onClick={handleTrackingClick}
+                                >
+                                <span className="nav-icon">{item.icon}</span>
+                                <span className="nav-text">{item.name}</span>
+                                </div>
+                            );
+                            }
                     return (
                         <Link key={index} to={item.path} className="nav-item">
                             <span className="nav-icon">{item.icon}</span>

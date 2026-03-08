@@ -224,8 +224,13 @@ const Topbar = ({ user }) => {
                         {getInitials(user?.fullName)}
                     </div>
                     <div className="user-info-small">
-                        <span className="user-name-small">{user?.fullName || 'User'}</span>
-                        <span className="user-role-small">{user?.role || 'Role'}</span>
+                       <span className="user-name-small">
+{user?.role === "admin" ? "System Admin" : user?.fullName || "User"}
+</span>
+
+<span className="user-role-small">
+{user?.role === "admin" ? "Admin" : user?.role || "Role"}
+</span>
                     </div>
                 </div>
             </div>

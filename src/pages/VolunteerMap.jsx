@@ -70,7 +70,17 @@ function VolunteerMap() {
         );
 
         if (!res.ok) throw new Error("Failed to load map data");
-        const data = await res.json();
+       const data = await res.json();
+
+        // ✅ Sync UI phase with backend status
+        if (data.status === "completed") {
+          setPhase("completed");
+        } else if (data.status === "in_transit") {
+          setPhase("to_destination");
+        } else if (data.status === "accepted") {
+          setPhase("waiting_start");
+        }
+
 
         const donor = data.donorLocation?.lat
           ? data.donorLocation
@@ -107,8 +117,9 @@ function VolunteerMap() {
 
   // 🔹 Animation
   useEffect(() => {
-    if (!path.length || phase === "waiting_start" || phase === "completed")
-      return;
+   if (!path.length || phase === "waiting_start" || phase === "completed") {
+  return;
+}
 
     const interval = setInterval(() => {
       if (index < path.length) {
@@ -121,9 +132,17 @@ function VolunteerMap() {
           setShowModal(true);
           setPhase("waiting_pickup");
         } else if (phase === "to_destination") {
-          setShowModal(true);
-          setPhase("completed");
+    setShowModal(true);
+    setPhase("completed");
+
+    fetch(`http://localhost:5001/api/assignments/${assignmentId}/complete`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
         }
+    });
+}
       }
     }, 200);
 
