@@ -1,0 +1,21 @@
+.fleet-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.delivery-card{
+  background:#1e293b;
+  border-radius:10px;
+  padding:10px;
+}
+
+.admin-map{
+  height:300px;
+  width:100%;
+}
+
+.delivery-info{
+  padding:10px;
+  color:white;
+}
