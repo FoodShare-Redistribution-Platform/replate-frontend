@@ -88,6 +88,38 @@ const NotificationsPage = () => {
         }
     };
 
+    const deleteNotification = async (e, id) => {
+        e.stopPropagation(); // prevent clicking the background
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:5001/api/notifications/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                setNotifications(prev => prev.filter(n => n._id !== id));
+            }
+        } catch (error) {
+            console.error('Error deleting notification:', error);
+        }
+    };
+
+    const clearAllNotifications = async () => {
+        if (!window.confirm("Are you sure you want to delete all notifications?")) return;
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:5001/api/notifications/clear-all', {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                setNotifications([]);
+            }
+        } catch (error) {
+            console.error('Error clearing notifications:', error);
+        }
+    };
+
     return (
         <div className="layout">
             <Sidebar user={user} />
@@ -100,9 +132,14 @@ const NotificationsPage = () => {
                             <p>Stay updated with your latest alerts</p>
                         </div>
                         {notifications.length > 0 && (
-                            <button className="mark-all-btn" onClick={markAllAsRead}>
-                                Mark all as read
-                            </button>
+                            <div>
+                                <button className="mark-all-btn" onClick={markAllAsRead}>
+                                    Mark all as read
+                                </button>
+                                <button className="clear-all-btn" onClick={clearAllNotifications}>
+                                    Clear all
+                                </button>
+                            </div>
                         )}
                     </div>
 
@@ -135,6 +172,13 @@ const NotificationsPage = () => {
                                         <p>{notification.message}</p>
                                     </div>
                                     {!notification.isRead && <div className="unread-dot"></div>}
+                                    <button
+                                        className="dismiss-btn"
+                                        onClick={(e) => deleteNotification(e, notification._id)}
+                                        title="Dismiss this notification"
+                                    >
+                                        ×
+                                    </button>
                                 </div>
                             ))}
                         </div>
