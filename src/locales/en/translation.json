@@ -1,0 +1,23 @@
+{
+  "sidebar": {
+    "appName": "FoodShare",
+    "appSubtitle": "Redistribution Platform",
+    "dashboard": "Dashboard",
+    "donateFood": "Donate Food",
+    "myDonations": "My Donations",
+    "liveMap": "Live Map",
+    "notifications": "Notifications",
+    "impact": "Impact",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "topbar": {
+    "notifications": "Notifications",
+    "toggleTheme": "Toggle Theme",
+    "language": "Language"
+  },
+  "voice": {
+    "listening": "Listening...",
+    "start": "Voice Navigate"
+  }
+}

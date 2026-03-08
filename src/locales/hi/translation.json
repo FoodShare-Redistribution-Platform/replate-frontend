@@ -1,0 +1,33 @@
+{
+    "sidebar": {
+        "appName": "FoodShare",
+        "appSubtitle": "पुनर्वितरण मंच",
+        "dashboard": "डैशबोर्ड",
+        "donateFood": "भोजन दान करें",
+        "myDonations": "मेरे दान",
+        "availableFood": "उपलब्ध भोजन",
+        "myRequests": "मेरे अनुरोध",
+        "assignments": "असाइनमेंट",
+        "myPickups": "मेरे पिकअप",
+        "availability": "उपलब्धता",
+        "allUsers": "सभी उपयोगकर्ता",
+        "donors": "दाता",
+        "ngos": "एनजीओ",
+        "volunteers": "स्वयंसेवक",
+        "donations": "दान",
+        "liveMap": "लाइव मानचित्र",
+        "notifications": "सूचनाएं",
+        "impact": "प्रभाव",
+        "profile": "प्रोफ़ाइल",
+        "logout": "लॉगआउट"
+    },
+    "topbar": {
+        "notifications": "सूचनाएं",
+        "toggleTheme": "थीம் बदलें",
+        "language": "भाषा"
+    },
+    "voice": {
+        "listening": "सुन रहा हूँ...",
+        "start": "आवाज नेविगेट"
+    }
+}

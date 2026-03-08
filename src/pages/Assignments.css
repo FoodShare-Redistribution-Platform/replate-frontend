@@ -123,10 +123,28 @@
     align-items: center;
 }
 
+.assignment-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
 .assignment-info h4 {
     color: #e2e8f0;
     font-size: 16px;
-    margin-bottom: 8px;
+    margin: 0;
+}
+
+.badge-recommended {
+    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4);
+    letter-spacing: 0.5px;
 }
 
 .assignment-details {
