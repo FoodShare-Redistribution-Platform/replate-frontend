@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
 import './Availability.css';
 
 const Availability = () => {
@@ -159,7 +158,7 @@ const Availability = () => {
     };
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="availability-container">
                 <div className="availability-header">
                     <div>
@@ -375,7 +374,7 @@ const Availability = () => {
                     </div>
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

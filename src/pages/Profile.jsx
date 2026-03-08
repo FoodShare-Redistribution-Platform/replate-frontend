@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../components/DashboardLayout';
 import './Profile.css';
 
 const Profile = () => {
@@ -105,17 +104,17 @@ const Profile = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="loading-container">
                     <div className="spinner"></div>
                     <p>Loading profile...</p>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="profile-page">
                 {/* Page Header */}
                 <div className="page-header">
@@ -304,7 +303,7 @@ const Profile = () => {
                     */}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

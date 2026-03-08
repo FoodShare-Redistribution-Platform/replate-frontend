@@ -17,8 +17,18 @@ import UserManagement from './pages/admin/UserManagement';
 import VolunteerLiveMapPage from "./pages/VolunteerMap";
 import VolunteerMap from "./pages/VolunteerMap";
 import Impact from './pages/Impact';
+<<<<<<< Updated upstream
 import TrackingMap from "./pages/TrackingMap";
 import AdminFleetMap from "./pages/admin/AdminFleetMap";
+=======
+import FoodManagement from './pages/admin/FoodManagement';
+import AdminAssignments from './pages/admin/AdminAssignments';
+import Analytics from './pages/admin/Analytics';
+import DashboardLayoutProvider from './components/DashboardLayoutProvider';
+
+
+
+>>>>>>> Stashed changes
 
 
 
@@ -31,30 +41,36 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Main Dashboard */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* Persistent Layout Wrapper */}
+        <Route element={<DashboardLayoutProvider />}>
+          {/* Main Dashboard */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/impact" element={<Impact />} />
 
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/impact" element={<Impact />} />
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/food" element={<FoodManagement />} />
+          <Route path="/admin/assignments" element={<AdminAssignments />} />
+          <Route path="/admin/analytics" element={<Analytics />} />
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<UserManagement />} />
+          {/* Donor Routes */}
+          <Route path="/donate-food" element={<DonateFood />} />
+          <Route path="/my-donations" element={<MyDonations />} />
 
-        {/* Donor Routes */}
-        <Route path="/donate-food" element={<DonateFood />} />
-        <Route path="/my-donations" element={<MyDonations />} />
+          {/* NGO Routes */}
+          <Route path="/available-food" element={<AvailableFood />} />
+          <Route path="/my-requests" element={<MyRequests />} />
 
-        {/* NGO Routes */}
-        <Route path="/available-food" element={<AvailableFood />} />
-        <Route path="/my-requests" element={<MyRequests />} />
+          {/* Volunteer Routes */}
+          <Route path="/assignments" element={<Assignments />} />
+          <Route path="/my-pickups" element={<MyPickups />} />
+          <Route path="/availability" element={<Availability />} />
+        </Route>
 
-        {/* Volunteer Routes */}
-        <Route path="/assignments" element={<Assignments />} />
-        <Route path="/my-pickups" element={<MyPickups />} />
-        <Route path="/availability" element={<Availability />} />
-        {/* 🔴 LIVE MAP ROUTE */}
+        {/* 🔴 LIVE MAP ROUTE (No Sidebar Layout) */}
         <Route
           path="/live-map/:assignmentId"
           element={<VolunteerMap />}

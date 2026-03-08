@@ -70,3 +70,11 @@ export const getAssignments = async (token) => {
     const res = await axios.get(`${API_URL}/assignments`, authHeader(token));
     return res.data;
 };
+
+export const getAnalyticsStats = async (token, timeRange = 'This Month') => {
+    const res = await axios.get(`${API_URL}/analytics`, {
+        ...authHeader(token),
+        params: { timeRange }
+    });
+    return res.data;
+};

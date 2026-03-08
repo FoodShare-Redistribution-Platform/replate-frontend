@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useVoiceRecognition } from '../hooks/useVoiceRecognition';
 import './Sidebar.css';
 
 const Sidebar = ({ user }) => {
-    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleLogout = React.useCallback(() => {
@@ -66,6 +64,7 @@ const Sidebar = ({ user }) => {
         switch (user?.role) {
             case 'donor':
                 return [
+<<<<<<< Updated upstream
                     { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
                     { name: t('sidebar.donateFood', 'Donate Food'), enName: 'donate food', icon: '🍱', path: '/donate-food' },
                     { name: t('sidebar.myDonations', 'My Donations'), enName: 'my donations', icon: '📦', path: '/my-donations' },
@@ -83,20 +82,40 @@ const Sidebar = ({ user }) => {
                     { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
                     { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
                     { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
+=======
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Donate Food', enName: 'donate food', icon: '🍱', path: '/donate-food' },
+                    { name: 'My Donations', enName: 'my donations', icon: '📦', path: '/my-donations' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
+                ];
+            case 'ngo':
+                return [
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Available Food', enName: 'available food', icon: '🍱', path: '/available-food' },
+                    { name: 'My Requests', enName: 'my requests', icon: '📦', path: '/my-requests' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
+>>>>>>> Stashed changes
                 ];
             case 'volunteer':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
-                    { name: t('sidebar.assignments', 'Assignments'), enName: 'assignments', icon: '📝', path: '/assignments' },
-                    { name: t('sidebar.myPickups', 'My Pickups'), enName: 'my pickups', icon: '🛵', path: '/my-pickups' },
-                    { name: t('sidebar.availability', 'Availability'), enName: 'availability', icon: '⏰', path: '/availability' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️', isLiveMap: true },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Assignments', enName: 'assignments', icon: '📝', path: '/assignments' },
+                    { name: 'My Pickups', enName: 'my pickups', icon: '🛵', path: '/my-pickups' },
+                    { name: 'Availability', enName: 'availability', icon: '⏰', path: '/availability' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', isLiveMap: true },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
                 ];
             case 'admin':
                 return [
+<<<<<<< Updated upstream
                     { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/admin' },
                     { name: t('sidebar.allUsers', 'All Users'), enName: 'all users', icon: '👥', path: '/admin/users' },
                     { name: t('sidebar.donors', 'Donors'), enName: 'donors', icon: '🤝', path: '/admin/users?role=donor' },
@@ -106,11 +125,20 @@ const Sidebar = ({ user }) => {
                     { name: t('sidebar.assignments', 'Assignments'), enName: 'assignments', icon: '🚚', disabled: true },
                      { name: t('sidebar.liveMap', 'Fleet Map'), enName: 'live map', icon: '🗺️',  path: '/admin/live-map'},
                     { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' }
+=======
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/admin' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Users', enName: 'users', icon: '👥', path: '/admin/users' },
+                    { name: 'Donations', enName: 'donations', icon: '🍱', path: '/admin/food' },
+                    { name: 'Assignments', enName: 'assignments', icon: '📝', path: '/admin/assignments' },
+                    { name: 'Analytics', enName: 'analytics', icon: '📉', path: '/admin/analytics' }
+>>>>>>> Stashed changes
                 ];
             default:
                 return [];
         }
-    }, [user?.role, t]);
+    }, [user?.role]);
 
     const menuItems = React.useMemo(() => getMenuItems(), [getMenuItems]);
 
@@ -154,8 +182,8 @@ const Sidebar = ({ user }) => {
                     </svg>
                 </div>
                 <div className="logo-text">
-                    <h2>{t('sidebar.appName', 'FoodShare')}</h2>
-                    <p>{t('sidebar.appSubtitle', 'Redistribution Platform')}</p>
+                    <h2>FoodShare</h2>
+                    <p>Redistribution Platform</p>
                 </div>
             </div>
 
@@ -202,10 +230,15 @@ user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
                             );
                             }
                     return (
-                        <Link key={index} to={item.path} className="nav-item">
+                        <NavLink
+                            key={index}
+                            to={item.path}
+                            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                            end={item.path === '/admin' || item.path === '/dashboard'}
+                        >
                             <span className="nav-icon">{item.icon}</span>
                             <span className="nav-text">{item.name}</span>
-                        </Link>
+                        </NavLink>
                     );
                 })}
             </nav>
@@ -213,7 +246,7 @@ user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
             <div className="sidebar-footer">
                 <button onClick={handleLogout} className="logout-btn">
                     <span className="nav-icon">🚪</span>
-                    <span className="nav-text">{t('sidebar.logout', 'Logout')}</span>
+                    <span className="nav-text">Logout</span>
                 </button>
             </div>
         </div>

@@ -1,62 +1,62 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useVoiceRecognition } from '../hooks/useVoiceRecognition';
 import './Topbar.css';
 
 const Topbar = ({ user }) => {
-    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
+    const translateRef = React.useRef(null);
     const [unreadCount, setUnreadCount] = React.useState(0);
 
     const getMenuItems = React.useCallback(() => {
         switch (user?.role) {
             case 'donor':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', path: '/dashboard' },
-                    { name: t('sidebar.donateFood', 'Donate Food'), enName: 'donate food', path: '/donate-food' },
-                    { name: t('sidebar.myDonations', 'My Donations'), enName: 'my donations', path: '/my-donations' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', disabled: true },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', path: '/dashboard' },
+                    { name: 'Donate Food', enName: 'donate food', path: '/donate-food' },
+                    { name: 'My Donations', enName: 'my donations', path: '/my-donations' },
+                    { name: 'Live Map', enName: 'live map', disabled: true },
+                    { name: 'Notifications', enName: 'notifications', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', path: '/profile' }
                 ];
             case 'ngo':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', path: '/dashboard' },
-                    { name: t('sidebar.availableFood', 'Available Food'), enName: 'available food', path: '/available-food' },
-                    { name: t('sidebar.myRequests', 'My Requests'), enName: 'my requests', path: '/my-requests' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', disabled: true },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', path: '/dashboard' },
+                    { name: 'Available Food', enName: 'available food', path: '/available-food' },
+                    { name: 'My Requests', enName: 'my requests', path: '/my-requests' },
+                    { name: 'Live Map', enName: 'live map', disabled: true },
+                    { name: 'Notifications', enName: 'notifications', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', path: '/profile' }
                 ];
             case 'volunteer':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', path: '/dashboard' },
-                    { name: t('sidebar.assignments', 'Assignments'), enName: 'assignments', path: '/assignments' },
-                    { name: t('sidebar.myPickups', 'My Pickups'), enName: 'my pickups', path: '/my-pickups' },
-                    { name: t('sidebar.availability', 'Availability'), enName: 'availability', path: '/availability' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', isLiveMap: true },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', path: '/dashboard' },
+                    { name: 'Assignments', enName: 'assignments', path: '/assignments' },
+                    { name: 'My Pickups', enName: 'my pickups', path: '/my-pickups' },
+                    { name: 'Availability', enName: 'availability', path: '/availability' },
+                    { name: 'Live Map', enName: 'live map', isLiveMap: true },
+                    { name: 'Notifications', enName: 'notifications', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', path: '/profile' }
                 ];
             case 'admin':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', path: '/admin' },
-                    { name: t('sidebar.allUsers', 'All Users'), enName: 'all users', path: '/admin/users' },
-                    { name: t('sidebar.donors', 'Donors'), enName: 'donors', path: '/admin/users?role=donor' },
-                    { name: t('sidebar.ngos', 'NGOs'), enName: 'ngos', path: '/admin/users?role=ngo' },
-                    { name: t('sidebar.volunteers', 'Volunteers'), enName: 'volunteers', path: '/admin/users?role=volunteer' },
-                    { name: t('sidebar.donations', 'Donations'), enName: 'donations', disabled: true },
-                    { name: t('sidebar.assignments', 'Assignments'), enName: 'assignments', disabled: true },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', path: '/impact' }
+                    { name: 'Dashboard', enName: 'dashboard', path: '/admin' },
+                    { name: 'All Users', enName: 'all users', path: '/admin/users' },
+                    { name: 'Donors', enName: 'donors', path: '/admin/users?role=donor' },
+                    { name: 'NGOs', enName: 'ngos', path: '/admin/users?role=ngo' },
+                    { name: 'Volunteers', enName: 'volunteers', path: '/admin/users?role=volunteer' },
+                    { name: 'Donations', enName: 'donations', disabled: true },
+                    { name: 'Assignments', enName: 'assignments', disabled: true },
+                    { name: 'Impact', enName: 'impact', path: '/impact' }
                 ];
             default:
                 return [];
         }
-    }, [user?.role, t]);
+    }, [user?.role]);
 
     const handleLiveMapClick = React.useCallback(async () => {
         try {
@@ -112,6 +112,57 @@ const Topbar = ({ user }) => {
     const { isListening, toggleListening, isSupported } = useVoiceRecognition(handleVoiceCommand);
 
     React.useEffect(() => {
+        const addGoogleTranslateScript = () => {
+            // Check if script already exists
+            if (document.getElementById('google-translate-script')) {
+                // If it exists, and window.google is ready, we force a re-render
+                if (window.google && window.google.translate && window.google.translate.TranslateElement) {
+                    if (translateRef.current && translateRef.current.innerHTML === '') {
+                        window.googleTranslateElementInit();
+                    }
+                }
+                return;
+            }
+
+            window.googleTranslateElementInit = () => {
+                new window.google.translate.TranslateElement(
+                    { pageLanguage: 'en', includedLanguages: 'en,hi,ta,ml,te,kn', autoDisplay: false },
+                    'google_translate_element'
+                );
+            };
+
+            const script = document.createElement('script');
+            script.id = 'google-translate-script';
+            script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+            script.async = true;
+            document.body.appendChild(script);
+        };
+
+        addGoogleTranslateScript();
+    }, []);
+
+    // Re-initialize widget when route changes
+    React.useEffect(() => {
+        if (translateRef.current && translateRef.current.innerHTML === '') {
+            if (window.google && window.google.translate && window.googleTranslateElementInit) {
+                // We use setTimeout to ensure it happens after React's paint
+                setTimeout(() => {
+                    // Clear the generated iframe and elements from the body if they exist
+                    const iframe = document.querySelector('.goog-te-menu-frame');
+                    if (iframe) iframe.remove();
+
+                    if (translateRef.current) {
+                        translateRef.current.innerHTML = '';
+                    }
+                    window.googleTranslateElementInit();
+                }, 200);
+            }
+        }
+    }, [location.pathname]);
+
+    React.useEffect(() => {
+        if (user?.role === 'admin') return;
+
         const fetchUnreadCount = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -134,7 +185,7 @@ const Topbar = ({ user }) => {
         fetchUnreadCount();
         const interval = setInterval(fetchUnreadCount, 10000); // Poll every 10s
         return () => clearInterval(interval);
-    }, []);
+    }, [user?.role]);
 
     const getInitials = (name) => {
         if (!name) return '?';
@@ -153,7 +204,7 @@ const Topbar = ({ user }) => {
                 {isSupported && (
                     <button
                         className={`icon-btn ${isListening ? 'listening' : ''}`}
-                        title={isListening ? t('voice.listening', 'Listening...') : t('voice.start', 'Voice Navigate')}
+                        title={isListening ? 'Listening...' : 'Voice Navigate'}
                         onClick={toggleListening}
                         style={{ background: isListening ? '#10b981' : 'transparent', color: isListening ? 'white' : 'inherit' }}
                     >
@@ -173,50 +224,35 @@ const Topbar = ({ user }) => {
                     </button>
                 )}
 
-                {/* Theme Toggle placeholder */}
-                <button className="icon-btn" title={t('topbar.toggleTheme', 'Toggle Theme')}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-                    </svg>
-                </button>
 
 
-                {/* Language Selector */}
+
+                {/* Google Translate Element */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255, 255, 255, 0.05)', padding: '4px 8px', borderRadius: '8px', border: '1px solid var(--border-color, #334155)' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-secondary, #94a3b8)' }}>
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="2" y1="12" x2="22" y2="12"></line>
                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                     </svg>
-                    <select
-                        className="lang-select"
-                        title={t('topbar.language', 'Language')}
-                        onChange={(e) => i18n.changeLanguage(e.target.value)}
-                        value={i18n.language || 'en'}
-                        style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', outline: 'none', fontSize: '0.95rem', fontWeight: '500', appearance: 'none', padding: '0 5px' }}
-                    >
-                        <option value="en" style={{ color: '#000' }}>English</option>
-                        <option value="hi" style={{ color: '#000' }}>Hindi</option>
-                        <option value="ta" style={{ color: '#000' }}>Tamil</option>
-                        <option value="ml" style={{ color: '#000' }}>Malayalam</option>
-                    </select>
+                    <div id="google_translate_element" ref={translateRef} className="google-translate-container"></div>
                 </div>
 
                 {/* Notifications */}
-                <button
-                    className="icon-btn notification-btn"
-                    title={t('topbar.notifications', 'Notifications')}
-                    onClick={() => navigate('/notifications')}
-                >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
-                    {unreadCount > 0 && (
-                        <span className="notification-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
-                    )}
-                </button>
+                {user?.role !== 'admin' && (
+                    <button
+                        className="icon-btn notification-btn"
+                        title="Notifications"
+                        onClick={() => navigate('/notifications')}
+                    >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        {unreadCount > 0 && (
+                            <span className="notification-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
+                        )}
+                    </button>
+                )}
 
                 {/* User Avatar */}
                 <div className="user-avatar-container" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
