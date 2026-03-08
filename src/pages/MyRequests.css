@@ -302,3 +302,115 @@
     background: #14b8a6;
     color: #ffffff;
 }
+
+/* Modal Overlay & Content */
+.btn-view-details {
+    background: #334155;
+    color: #f1f5f9;
+}
+
+.btn-view-details:hover {
+    background: #475569;
+    transform: translateY(-1px);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.receipt-modal {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    color: #f1f5f9;
+    text-align: left;
+}
+
+.receipt-modal h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #f1f5f9;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #f1f5f9;
+}
+
+.modal-divider {
+    border: 0;
+    border-top: 1px solid #334155;
+    margin: 1rem 0;
+}
+
+.receipt-section {
+    margin-bottom: 1.5rem;
+}
+
+.receipt-section h3 {
+    font-size: 1.1rem;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.receipt-section p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+}
+
+.receipt-section p strong {
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-cancel-modal {
+    flex: 1;
+    padding: 0.75rem;
+    background: transparent;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-modal:hover {
+    background: #334155;
+    color: #f1f5f9;
+}

@@ -17,9 +17,8 @@ import UserManagement from './pages/admin/UserManagement';
 import VolunteerLiveMapPage from "./pages/VolunteerMap";
 import VolunteerMap from "./pages/VolunteerMap";
 import Impact from './pages/Impact';
-
-
-
+import TrackingMap from "./pages/TrackingMap";
+import AdminFleetMap from "./pages/admin/AdminFleetMap";
 
 
 
@@ -60,6 +59,8 @@ function App() {
           path="/live-map/:assignmentId"
           element={<VolunteerMap />}
         />
+        <Route path="/tracking/:assignmentId" element={<TrackingMap />} />
+        <Route path="/admin/live-map" element={<AdminFleetMap />} />
 
 
 
