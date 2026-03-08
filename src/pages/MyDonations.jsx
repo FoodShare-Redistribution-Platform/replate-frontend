@@ -293,6 +293,17 @@ const MyDonations = () => {
                                             <span className="detail-label">Created:</span>
                                             <span className="detail-value">{formatDate(donation.createdAt)}</span>
                                         </div>
+                                        {donation.acceptedBy && (
+                                            <div className="detail-row" style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px dashed #334155' }}>
+                                                <span className="detail-label">Accepted By:</span>
+                                                <span className="detail-value" style={{ color: '#3b82f6' }}>
+                                                    {donation.acceptedBy.organizationName || donation.acceptedBy.name} <br />
+                                                    <span style={{ fontSize: '0.8rem', fontWeight: 'normal', color: '#94a3b8' }}>
+                                                        📞 {donation.acceptedBy.phone}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        )}
                                         {donation.assignedTo && (
                                             <div className="detail-row" style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px dashed #334155' }}>
                                                 <span className="detail-label">Volunteer:</span>

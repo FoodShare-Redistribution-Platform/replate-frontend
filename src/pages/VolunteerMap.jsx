@@ -27,15 +27,22 @@ async function geocode(address) {
 
 // ✅ Route Fetcher
 async function getRoute(start, end) {
-  const res = await fetch(
-    `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`
-  );
-  const data = await res.json();
+  try {
+    const res = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`
+    );
+    if (!res.ok) throw new Error("OSRM error");
+    const data = await res.json();
 
-  return data.routes[0].geometry.coordinates.map(([lng, lat]) => ({
-    lat,
-    lng,
-  }));
+    return data.routes[0].geometry.coordinates.map(([lng, lat]) => ({
+      lat,
+      lng,
+    }));
+  } catch (err) {
+    console.warn("Routing failed, falling back to straight line:", err);
+    // Fallback: Straight line
+    return [start, end];
+  }
 }
 
 function VolunteerMap() {
@@ -63,7 +70,17 @@ function VolunteerMap() {
         );
 
         if (!res.ok) throw new Error("Failed to load map data");
-        const data = await res.json();
+       const data = await res.json();
+
+        // ✅ Sync UI phase with backend status
+        if (data.status === "completed") {
+          setPhase("completed");
+        } else if (data.status === "in_transit") {
+          setPhase("to_destination");
+        } else if (data.status === "accepted") {
+          setPhase("waiting_start");
+        }
+
 
         const donor = data.donorLocation?.lat
           ? data.donorLocation
@@ -86,6 +103,7 @@ function VolunteerMap() {
         setPath(route);
       } catch (err) {
         console.error("Map load failed:", err);
+        setError("Failed to load map data. Please ensure GPS is enabled and try again.");
       }
     }
 
@@ -99,8 +117,9 @@ function VolunteerMap() {
 
   // 🔹 Animation
   useEffect(() => {
-    if (!path.length || phase === "waiting_start" || phase === "completed")
-      return;
+   if (!path.length || phase === "waiting_start" || phase === "completed") {
+  return;
+}
 
     const interval = setInterval(() => {
       if (index < path.length) {
@@ -113,9 +132,17 @@ function VolunteerMap() {
           setShowModal(true);
           setPhase("waiting_pickup");
         } else if (phase === "to_destination") {
-          setShowModal(true);
-          setPhase("completed");
+    setShowModal(true);
+    setPhase("completed");
+
+    fetch(`http://localhost:5001/api/assignments/${assignmentId}/complete`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
         }
+    });
+}
       }
     }, 200);
 
@@ -131,8 +158,33 @@ function VolunteerMap() {
     }
   }
 
+  const [error, setError] = useState(null);
+
+  if (error) {
+    return (
+      <div className="volunteer-map-page">
+        <div className="map-card">
+          <h2 className="map-title">Map Error</h2>
+          <p style={{ color: 'red', textAlign: 'center', padding: '2rem' }}>{error}</p>
+          <button onClick={() => window.location.reload()} style={{ display: 'block', margin: '0 auto', padding: '0.5rem 1rem', background: '#334155', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Retry</button>
+        </div>
+      </div>
+    );
+  }
+
   if (!volunteerPos || !source || !destination) {
-    return <p>Loading map...</p>;
+    return (
+      <div className="volunteer-map-page">
+        <div className="map-card">
+          <h2 className="map-title">Loading Navigation...</h2>
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <div className="spinner" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #10b981', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+            <p style={{ marginTop: '1rem', color: '#94a3b8' }}>Fetching location data...</p>
+          </div>
+        </div>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
   }
 
   return (
@@ -165,10 +217,10 @@ function VolunteerMap() {
               {phase === "to_source"
                 ? "Heading to Donor"
                 : phase === "to_destination"
-                ? "Heading to Consumer"
-                : phase === "completed"
-                ? "Completed"
-                : "Ready to Start"}
+                  ? "Heading to Consumer"
+                  : phase === "completed"
+                    ? "Completed"
+                    : "Ready to Start"}
             </span>
           </div>
 
@@ -185,8 +237,8 @@ function VolunteerMap() {
               {phase === "to_source"
                 ? "Proceed to donor location for pickup."
                 : phase === "to_destination"
-                ? "Deliver food to consumer safely."
-                : ""}
+                  ? "Deliver food to consumer safely."
+                  : ""}
             </span>
           </div>
         </div>

@@ -1,0 +1,33 @@
+{
+    "sidebar": {
+        "appName": "FoodShare",
+        "appSubtitle": "പുനർവിതരണ പ്ലാറ്റ്ഫോം",
+        "dashboard": "ഡാഷ്ബോർഡ്",
+        "donateFood": "ഭക്ഷണം ദാനം ചെയ്യുക",
+        "myDonations": "എന്റെ ദാനങ്ങൾ",
+        "availableFood": "ലഭ്യമായ ഭക്ഷണം",
+        "myRequests": "എന്റെ അഭ്യർത്ഥനകൾ",
+        "assignments": "അസൈൻമെന്റുകൾ",
+        "myPickups": "എന്റെ പിക്കപ്പുകൾ",
+        "availability": "ലഭ്യത",
+        "allUsers": "എല്ലാ ഉപയോക്താക്കളും",
+        "donors": "ദാതാക്കൾ",
+        "ngos": "എൻജിഒകൾ",
+        "volunteers": "വോളന്റിയർമാർ",
+        "donations": "ദാനങ്ങൾ",
+        "liveMap": "ലൈവ് മാപ്പ്",
+        "notifications": "അറിയിപ്പുകൾ",
+        "impact": "സ്വാധീനം",
+        "profile": "പ്രൊഫൈൽ",
+        "logout": "ലോഗൗട്ട്"
+    },
+    "topbar": {
+        "notifications": "അറിയിപ്പുകൾ",
+        "toggleTheme": "തീം മാറ്റുക",
+        "language": "ഭാഷ"
+    },
+    "voice": {
+        "listening": "ശ്രദ്ധിക്കുന്നു...",
+        "start": "വോയ്സ് നാവിഗേറ്റ്"
+    }
+}
