@@ -129,7 +129,7 @@ const Assignments = () => {
                                     <div className="assignment-title-row">
                                         <h4>{assign.foodName || 'Food Donation'}</h4>
                                         {assign.recommended && (
-                                            <span className="badge-recommended">⭐ Recommended ({assign.suitabilityScore} pts)</span>
+                                            <span className="badge-recommended">⭐ Recommended</span>
                                         )}
                                     </div>
                                     <div className="assignment-details">
