@@ -60,7 +60,7 @@ const Topbar = ({ user }) => {
     const handleLiveMapClick = React.useCallback(async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("http://localhost:5001/api/assignments/volunteer-active", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/assignments/volunteer-active`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (!res.ok) return;
@@ -72,7 +72,7 @@ const Topbar = ({ user }) => {
     const handleTrackingClick = React.useCallback(async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("http://localhost:5001/api/assignments/volunteer-active", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/assignments/volunteer-active`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (!res.ok) {
@@ -184,7 +184,7 @@ const Topbar = ({ user }) => {
                 const token = localStorage.getItem('token');
                 if (!token) return;
 
-                const response = await fetch('http://localhost:5001/api/notifications/unread-count', {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/unread-count`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

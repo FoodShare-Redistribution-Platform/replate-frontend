@@ -87,7 +87,7 @@ const DonateFood = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/api/users/me', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -187,8 +187,8 @@ const DonateFood = () => {
             const location = await getLocation();
 
             const url = editMode && existingDonation
-                ? `http://localhost:5001/api/donations/${existingDonation._id}`
-                : 'http://localhost:5001/api/donations';
+                ? `${import.meta.env.VITE_API_URL}/api/donations/${existingDonation._id}`
+                : `${import.meta.env.VITE_API_URL}/api/donations`;
 
             const method = editMode && existingDonation ? 'PUT' : 'POST';
 

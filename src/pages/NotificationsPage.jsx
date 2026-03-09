@@ -10,7 +10,7 @@ const NotificationsPage = () => {
     const fetchNotifications = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/notifications', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -31,7 +31,7 @@ const NotificationsPage = () => {
     const markAsRead = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5001/api/notifications/${id}/read`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/${id}/read`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -46,7 +46,7 @@ const NotificationsPage = () => {
     const markAllAsRead = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/notifications/read-all', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/read-all`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -88,7 +88,7 @@ const NotificationsPage = () => {
         e.stopPropagation(); // prevent clicking the background
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5001/api/notifications/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -104,7 +104,7 @@ const NotificationsPage = () => {
         if (!window.confirm("Are you sure you want to delete all notifications?")) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/notifications/clear-all', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/clear-all`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

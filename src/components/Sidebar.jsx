@@ -16,7 +16,7 @@ const Sidebar = ({ user }) => {
         try {
             const token = localStorage.getItem("token");
             const res = await fetch(
-                "http://localhost:5001/api/assignments/volunteer-active",
+                `${import.meta.env.VITE_API_URL}/api/assignments/volunteer-active`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -35,7 +35,7 @@ const Sidebar = ({ user }) => {
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-            "http://localhost:5001/api/assignments/volunteer-active",
+            `${import.meta.env.VITE_API_URL}/api/assignments/volunteer-active`,
             {
                 headers: { Authorization: `Bearer ${token}` }
             }

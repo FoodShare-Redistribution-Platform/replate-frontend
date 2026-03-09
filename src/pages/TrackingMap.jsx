@@ -17,7 +17,7 @@ function TrackingMap() {
   useEffect(() => {
     async function load() {
       const res = await fetch(
-        `http://localhost:5001/api/assignments/${assignmentId}/map`,
+        `${import.meta.env.VITE_API_URL}/api/assignments/${assignmentId}/map`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -66,7 +66,7 @@ function TrackingMap() {
         <div className="route-info">
           <div className="info-box">
             <span className="label">Status</span>
-            <span className="value">{status.replace("_"," ").toUpperCase()}</span>
+            <span className="value">{status.replace("_", " ").toUpperCase()}</span>
           </div>
         </div>
       </div>

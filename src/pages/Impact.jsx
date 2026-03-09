@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Impact.css';
 
-const API_BASE = 'http://localhost:5001/api/impact';
+const API_BASE = `${import.meta.env.VITE_API_URL}/api/impact`;
 
 const BADGE_STYLES = {
     platinum: { bg: 'linear-gradient(135deg, #E5E4E2, #B8B8B8)', border: '#E5E4E2', text: '#1e293b' },
-    gold:     { bg: 'linear-gradient(135deg, #FFD700, #FFA500)', border: '#FFD700', text: '#1e293b' },
-    silver:   { bg: 'linear-gradient(135deg, #C0C0C0, #A0A0A0)', border: '#C0C0C0', text: '#1e293b' },
-    bronze:   { bg: 'linear-gradient(135deg, #CD7F32, #A0522D)', border: '#CD7F32', text: '#fff' },
-    none:     { bg: 'linear-gradient(135deg, #334155, #1e293b)', border: '#475569', text: '#94a3b8' }
+    gold: { bg: 'linear-gradient(135deg, #FFD700, #FFA500)', border: '#FFD700', text: '#1e293b' },
+    silver: { bg: 'linear-gradient(135deg, #C0C0C0, #A0A0A0)', border: '#C0C0C0', text: '#1e293b' },
+    bronze: { bg: 'linear-gradient(135deg, #CD7F32, #A0522D)', border: '#CD7F32', text: '#fff' },
+    none: { bg: 'linear-gradient(135deg, #334155, #1e293b)', border: '#475569', text: '#94a3b8' }
 };
 
 const Impact = () => {
