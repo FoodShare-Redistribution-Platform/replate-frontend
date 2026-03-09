@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../components/DashboardLayout';
 import './AvailableFood.css';
 
 const AvailableFood = () => {
@@ -113,16 +112,16 @@ const AvailableFood = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="available-food-page">
                     <div className="loading">Loading available food...</div>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="available-food-page">
                 {/* Header */}
                 <div className="page-header">
@@ -305,7 +304,7 @@ const AvailableFood = () => {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

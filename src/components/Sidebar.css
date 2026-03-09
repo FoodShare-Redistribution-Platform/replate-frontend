@@ -207,6 +207,42 @@
 }
 
 /* Mobile - Add toggle functionality later if needed */
+/* Voice Navigation Button Styles */
+.voice-nav-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.voice-nav-btn.listening {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    animation: sidebar-pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes sidebar-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+}
+
 @media (max-width: 1024px) {
     .sidebar {
         width: 260px;

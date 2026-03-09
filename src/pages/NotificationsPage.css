@@ -1,21 +1,7 @@
-.layout {
-    display: flex;
-    min-height: 100vh;
-    background-color: var(--dark-bg);
+.notifications-page {
+    padding: 0;
 }
 
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-left: 280px;
-    background-color: var(--dark-bg);
-}
-
-.page-container {
-    padding: 2rem;
-    flex: 1;
-}
 
 .page-header {
     display: flex;

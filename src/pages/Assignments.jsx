@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
 import './Assignments.css';
 
 const Assignments = () => {
@@ -64,7 +63,7 @@ const Assignments = () => {
     };
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="assignments-container">
                 <div className="assignments-header">
                     <h1>Available Assignments</h1>
@@ -150,7 +149,7 @@ const Assignments = () => {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

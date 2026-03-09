@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useVoiceRecognition } from '../hooks/useVoiceRecognition';
 import './Sidebar.css';
 
 const Sidebar = ({ user }) => {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = React.useCallback(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         navigate('/login');
-    };
+    }, [navigate]);
 
-    const handleLiveMapClick = async () => {
+    const handleLiveMapClick = React.useCallback(async () => {
         try {
             const token = localStorage.getItem("token");
             const res = await fetch(
@@ -22,22 +23,17 @@ const Sidebar = ({ user }) => {
                     }
                 }
             );
-
-            if (!res.ok) {
-                alert("No active assignment right now");
-                return;
-            }
-
+            if (!res.ok) return;
             const assignment = await res.json();
             navigate(`/live-map/${assignment._id}`);
         } catch (err) {
             console.error(err);
-            alert("Unable to open live map");
         }
-    };
+    }, [navigate]);
 
     const handleTrackingClick = async () => {
         const token = localStorage.getItem("token");
+
         const res = await fetch(
             "http://localhost:5001/api/assignments/volunteer-active",
             {
@@ -51,6 +47,7 @@ const Sidebar = ({ user }) => {
         }
 
         const assignment = await res.json();
+
         navigate(`/tracking/${assignment._id}`);
     };
 
@@ -63,57 +60,55 @@ const Sidebar = ({ user }) => {
         return name[0].toUpperCase();
     };
 
-    const getMenuItems = () => {
+    const getMenuItems = React.useCallback(() => {
         switch (user?.role) {
             case 'donor':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/dashboard' },
-                    { name: 'Donate Food', icon: '🍱', path: '/donate-food' },
-                    { name: 'My Donations', icon: '📦', path: '/my-donations' },
-                    { name: 'Live Map', icon: '🗺️', isTracking: true },
-                    { name: 'Notifications', icon: '🔔', path: '/notifications' },
-                    { name: 'Impact', icon: '📈', path: '/impact' },
-                    { name: 'Profile', icon: '👤', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Donate Food', enName: 'donate food', icon: '🍱', path: '/donate-food' },
+                    { name: 'My Donations', enName: 'my donations', icon: '📦', path: '/my-donations' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', isTracking: true },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
                 ];
             case 'ngo':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/dashboard' },
-                    { name: 'Available Food', icon: '🍱', path: '/available-food' },
-                    { name: 'My Requests', icon: '📦', path: '/my-requests' },
-                    { name: 'Live Map', icon: '🗺️', isTracking: true },
-                    { name: 'Notifications', icon: '🔔', path: '/notifications' },
-                    { name: 'Impact', icon: '📈', path: '/impact' },
-                    { name: 'Profile', icon: '👤', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Available Food', enName: 'available food', icon: '🍱', path: '/available-food' },
+                    { name: 'My Requests', enName: 'my requests', icon: '📦', path: '/my-requests' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', isTracking: true },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
                 ];
             case 'volunteer':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/dashboard' },
-                    { name: 'Assignments', icon: '📝', path: '/assignments' },
-                    { name: 'My Pickups', icon: '🛵', path: '/my-pickups' },
-                    { name: 'Availability', icon: '⏰', path: '/availability' },
-                    { name: 'Live Map', icon: '🗺️', isLiveMap: true },
-                    { name: 'Notifications', icon: '🔔', path: '/notifications' },
-                    { name: 'Impact', icon: '📈', path: '/impact' },
-                    { name: 'Profile', icon: '👤', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Assignments', enName: 'assignments', icon: '📝', path: '/assignments' },
+                    { name: 'My Pickups', enName: 'my pickups', icon: '🛵', path: '/my-pickups' },
+                    { name: 'Availability', enName: 'availability', icon: '⏰', path: '/availability' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', isLiveMap: true },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
                 ];
             case 'admin':
                 return [
-                    { name: 'Dashboard', icon: '📊', path: '/admin' },
-                    { name: 'All Users', icon: '👥', path: '/admin/users' },
-                    { name: 'Donors', icon: '🤝', path: '/admin/users?role=donor' },
-                    { name: 'NGOs', icon: '🏢', path: '/admin/users?role=ngo' },
-                    { name: 'Volunteers', icon: '🚴', path: '/admin/users?role=volunteer' },
-                    { name: 'Donations', icon: '📦', disabled: true },
-                    { name: 'Assignments', icon: '🚚', disabled: true },
-                    { name: 'Fleet Map', icon: '🗺️', path: '/admin/live-map' },
-                    { name: 'Impact', icon: '📈', path: '/impact' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/admin' },
+                    { name: 'Fleet Map', enName: 'fleet map', icon: '🗺️', path: '/admin/live-map' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Users', enName: 'users', icon: '👥', path: '/admin/users' },
+                    { name: 'Donations', enName: 'donations', icon: '🍱', path: '/admin/food' },
+                    { name: 'Assignments', enName: 'assignments', icon: '📝', path: '/admin/assignments' },
+                    { name: 'Analytics', enName: 'analytics', icon: '📉', path: '/admin/analytics' }
                 ];
             default:
                 return [];
         }
-    };
+    }, [user?.role]);
 
-    const menuItems = getMenuItems();
+    const menuItems = React.useMemo(() => getMenuItems(), [getMenuItems]);
 
     return (
         <div className="sidebar">
@@ -133,6 +128,7 @@ const Sidebar = ({ user }) => {
                 <div className="user-avatar">{getInitials(user?.fullName)}</div>
                 <div className="user-details">
                     <h3>{user?.role === "admin" ? "System Admin" : user?.fullName}</h3>
+
                     <p className="user-role">
                         {user?.role === "admin" ? "Admin" :
                             user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
@@ -150,30 +146,36 @@ const Sidebar = ({ user }) => {
                             </div>
                         );
                     }
-
                     if (item.isLiveMap) {
                         return (
-                            <div key={index} className="nav-item" onClick={handleLiveMapClick}>
+                            <div key={index} className="nav-item" onClick={handleLiveMapClick} style={{ cursor: 'pointer' }}>
                                 <span className="nav-icon">{item.icon}</span>
                                 <span className="nav-text">{item.name}</span>
                             </div>
                         );
                     }
-
                     if (item.isTracking) {
                         return (
-                            <div key={index} className="nav-item" onClick={handleTrackingClick}>
+                            <div
+                                key={index}
+                                className="nav-item"
+                                onClick={handleTrackingClick}
+                            >
                                 <span className="nav-icon">{item.icon}</span>
                                 <span className="nav-text">{item.name}</span>
                             </div>
                         );
                     }
-
                     return (
-                        <Link key={index} to={item.path} className="nav-item">
+                        <NavLink
+                            key={index}
+                            to={item.path}
+                            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+                            end={item.path === '/admin' || item.path === '/dashboard'}
+                        >
                             <span className="nav-icon">{item.icon}</span>
                             <span className="nav-text">{item.name}</span>
-                        </Link>
+                        </NavLink>
                     );
                 })}
             </nav>

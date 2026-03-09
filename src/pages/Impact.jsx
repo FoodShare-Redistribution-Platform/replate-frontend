@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
 import './Impact.css';
 
 const API_BASE = 'http://localhost:5001/api/impact';
@@ -115,14 +114,14 @@ const Impact = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="loading">Loading impact data...</div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="impact-page">
                 <div className="impact-header">
                     <h1>Your Impact Dashboard</h1>
@@ -1115,7 +1114,7 @@ const Impact = () => {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import DashboardLayout from '../components/DashboardLayout';
 import FoodDetailsStep from '../components/donate/FoodDetailsStep';
 import SafetyInfoStep from '../components/donate/SafetyInfoStep';
 import HygieneDeclarationStep from '../components/donate/HygieneDeclarationStep';
@@ -246,17 +245,17 @@ const DonateFood = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="loading-container">
                     <div className="spinner"></div>
                     <p>Loading...</p>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="donate-page">
                 {/* Page Header */}
                 <div className="donate-header">
@@ -324,7 +323,7 @@ const DonateFood = () => {
                     )}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 
