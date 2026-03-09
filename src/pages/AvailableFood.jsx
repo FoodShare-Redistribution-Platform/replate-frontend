@@ -10,6 +10,7 @@ const AvailableFood = () => {
     const [donations, setDonations] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('all');
+    const [selectedDonation, setSelectedDonation] = useState(null);
 
     useEffect(() => {
         fetchUser();
@@ -242,16 +243,65 @@ const AvailableFood = () => {
                                             </div>
                                         )}
 
-                                        <button
-                                            className="btn-request"
-                                            onClick={() => handleRequestFood(donation._id)}
-                                        >
-                                            Request Food
-                                        </button>
+                                        <div className="action-buttons">
+                                            <button
+                                                className="btn-view-details"
+                                                onClick={() => setSelectedDonation(donation)}
+                                            >
+                                                View Details
+                                            </button>
+                                            <button
+                                                className="btn-request"
+                                                onClick={() => handleRequestFood(donation._id)}
+                                            >
+                                                Request Food
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             );
                         })}
+                    </div>
+                )}
+
+                {/* Receipt / Details Modal */}
+                {selectedDonation && (
+                    <div className="modal-overlay" onClick={() => setSelectedDonation(null)}>
+                        <div className="modal-content receipt-modal" onClick={e => e.stopPropagation()}>
+                            <button className="modal-close" onClick={() => setSelectedDonation(null)}>×</button>
+                            <h2>Donation Receipt Reference</h2>
+                            <hr className="modal-divider" />
+
+                            <div className="receipt-section">
+                                <h3>Food Details</h3>
+                                <p><strong>Item Name:</strong> {selectedDonation.foodName}</p>
+                                <p><strong>Food Type:</strong> {selectedDonation.foodType}</p>
+                                <p><strong>Quantity:</strong> {selectedDonation.quantity} {selectedDonation.unit}</p>
+                                <p><strong>Servings:</strong> {selectedDonation.estimatedServings}</p>
+                            </div>
+
+                            <div className="receipt-section">
+                                <h3>Timing & Storage</h3>
+                                <p><strong>Preparation Date/Time:</strong> {selectedDonation.preparationDate} {selectedDonation.preparationTime ? `at ${selectedDonation.preparationTime}` : ''}</p>
+                                <p><strong>Expiry Date/Time:</strong> {selectedDonation.expiryDate} {selectedDonation.expiryTime ? `at ${selectedDonation.expiryTime}` : ''}</p>
+                                <p><strong>Storage Condition:</strong> {selectedDonation.storageCondition || 'N/A'}</p>
+                            </div>
+
+                            <div className="receipt-section">
+                                <h3>Donor Information</h3>
+                                <p><strong>Donor Name:</strong> {selectedDonation.donor?.fullName || 'N/A'}</p>
+                                <p><strong>Organization:</strong> {selectedDonation.donor?.organizationName || 'N/A'}</p>
+                                <p><strong>Location:</strong> {selectedDonation.city || selectedDonation.donor?.city || 'N/A'}</p>
+                            </div>
+
+                            <div className="modal-actions">
+                                <button className="btn-request-modal" onClick={() => {
+                                    handleRequestFood(selectedDonation._id);
+                                    setSelectedDonation(null);
+                                }}>Request This Food</button>
+                                <button className="btn-cancel-modal" onClick={() => setSelectedDonation(null)}>Close</button>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

@@ -9,6 +9,7 @@ const MyRequests = () => {
     const [loading, setLoading] = useState(true);
     const [requests, setRequests] = useState([]);
     const [filterStatus, setFilterStatus] = useState('all');
+    const [selectedRequest, setSelectedRequest] = useState(null);
 
     useEffect(() => {
         fetchUser();
@@ -293,14 +294,14 @@ const MyRequests = () => {
                                         <span className="detail-icon">📅</span>
                                         <span>{new Date(request.requestedAt).toLocaleDateString()}</span>
                                     </div>
-                                    {request.donation?.assignedTo && (
+                                    {(request.volunteer || request.donation?.assignedTo) && (
                                         <div className="detail-row" style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px dashed #334155' }}>
                                             <span className="detail-icon">🛵</span>
                                             <span>
-                                                Volunteer: <strong style={{ color: '#10b981' }}>{request.donation.assignedTo.fullName}</strong>
+                                                Volunteer: <strong style={{ color: '#10b981' }}>{request.volunteer?.fullName || request.donation?.assignedTo?.fullName}</strong>
                                                 <br />
                                                 <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginLeft: '1.5rem' }}>
-                                                    📞 {request.donation.assignedTo.phone}
+                                                    📞 {request.volunteer?.phone || request.donation?.assignedTo?.phone}
                                                 </span>
                                             </span>
                                         </div>
@@ -316,6 +317,13 @@ const MyRequests = () => {
                                 )}
 
                                 <div className="request-actions">
+                                    <button
+                                        className="btn-view-details"
+                                        style={{ flex: request.status !== 'pending' ? '1' : '0.5' }}
+                                        onClick={() => setSelectedRequest(request)}
+                                    >
+                                        View Details
+                                    </button>
                                     {request.status === 'pending' && (
                                         <>
                                             <button className="btn-accept" onClick={() => handleAccept(request._id)}>
@@ -339,6 +347,43 @@ const MyRequests = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {/* Receipt / Details Modal */}
+                {selectedRequest && selectedRequest.donation && (
+                    <div className="modal-overlay" onClick={() => setSelectedRequest(null)}>
+                        <div className="modal-content receipt-modal" onClick={e => e.stopPropagation()}>
+                            <button className="modal-close" onClick={() => setSelectedRequest(null)}>×</button>
+                            <h2>Request Receipt Details</h2>
+                            <hr className="modal-divider" />
+
+                            <div className="receipt-section">
+                                <h3>Food Details</h3>
+                                <p><strong>Item Name:</strong> {selectedRequest.donation.foodName}</p>
+                                <p><strong>Food Type:</strong> {selectedRequest.donation.foodType}</p>
+                                <p><strong>Quantity:</strong> {selectedRequest.donation.quantity} {selectedRequest.donation.unit}</p>
+                                <p><strong>Servings:</strong> {selectedRequest.donation.estimatedServings}</p>
+                            </div>
+
+                            <div className="receipt-section">
+                                <h3>Timing & Storage</h3>
+                                <p><strong>Preparation Date/Time:</strong> {selectedRequest.donation.preparationDate} {selectedRequest.donation.preparationTime ? `at ${selectedRequest.donation.preparationTime}` : ''}</p>
+                                <p><strong>Expiry Date/Time:</strong> {selectedRequest.donation.expiryDate} {selectedRequest.donation.expiryTime ? `at ${selectedRequest.donation.expiryTime}` : ''}</p>
+                                <p><strong>Storage Condition:</strong> {selectedRequest.donation.storageCondition || 'N/A'}</p>
+                            </div>
+
+                            <div className="receipt-section">
+                                <h3>Donor Information</h3>
+                                <p><strong>Donor Name:</strong> {selectedRequest.donation.donor?.fullName || 'N/A'}</p>
+                                <p><strong>Organization:</strong> {selectedRequest.donation.donor?.organizationName || 'N/A'}</p>
+                                <p><strong>Location:</strong> {selectedRequest.donation.city || selectedRequest.donation.donor?.city || 'N/A'}</p>
+                            </div>
+
+                            <div className="modal-actions">
+                                <button className="btn-cancel-modal" onClick={() => setSelectedRequest(null)}>Close</button>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

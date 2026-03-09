@@ -131,7 +131,7 @@ const DonateFood = () => {
                 return formData.hygiene.safeHandling && formData.hygiene.temperatureControl &&
                     formData.hygiene.properPackaging && formData.hygiene.noContamination;
             case 4:
-                const isDeadlineValid = !formData.pickupDeadline || !formData.expiryDate || !formData.expiryTime ||
+                const isDeadlineValid = formData.pickupDeadline && formData.expiryDate && formData.expiryTime &&
                     new Date(formData.pickupDeadline) < new Date(`${formData.expiryDate}T${formData.expiryTime}`);
                 return formData.pickupAddress && formData.city && formData.pickupDeadline && isDeadlineValid;
             default:
@@ -156,22 +156,29 @@ const DonateFood = () => {
 
         // Get current location for map tracking
         const getLocation = () => {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
-                        (position) => {
+                        (pos) => {
                             resolve({
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
+                                lat: pos.coords.latitude,
+                                lng: pos.coords.longitude
                             });
                         },
-                        (error) => {
-                            console.warn('Geolocation error:', error);
-                            resolve(null); // Don't fail if location cannot be obtained
+                        () => {
+                            // fallback to Chennai
+                            resolve({
+                                lat: 13.0827,
+                                lng: 80.2707
+                            });
                         }
                     );
                 } else {
-                    resolve(null);
+                    // fallback to Chennai
+                    resolve({
+                        lat: 13.0827,
+                        lng: 80.2707
+                    });
                 }
             });
         };
