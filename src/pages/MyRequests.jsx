@@ -11,6 +11,17 @@ const MyRequests = () => {
     const [filterStatus, setFilterStatus] = useState('all');
     const [selectedRequest, setSelectedRequest] = useState(null);
 
+    // Feedback States
+    const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+    const [feedbackData, setFeedbackData] = useState({
+        donationId: '',
+        rating: 5,
+        foodQuality: 'Excellent',
+        packagingQuality: 'Intact',
+        comments: '',
+        isPublic: false
+    });
+
     useEffect(() => {
         fetchUser();
         fetchRequests();
@@ -49,6 +60,40 @@ const MyRequests = () => {
             console.error('Error fetching requests:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSubmitFeedback = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:5001/api/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(feedbackData)
+            });
+
+            if (response.ok) {
+                alert('Thank you for your feedback!');
+                setShowFeedbackModal(false);
+                setFeedbackData({
+                    donationId: '',
+                    rating: 5,
+                    foodQuality: 'Excellent',
+                    packagingQuality: 'Intact',
+                    comments: '',
+                    isPublic: false
+                });
+            } else {
+                const err = await response.json();
+                alert(err.message || 'Error submitting feedback. You may have already reviewed this donation.');
+            }
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            alert('Failed to connect to the server');
         }
     };
 
@@ -324,6 +369,19 @@ const MyRequests = () => {
                                     >
                                         View Details
                                     </button>
+
+                                    {request.status === 'delivered' && (
+                                        <button
+                                            className="btn-feedback"
+                                            onClick={() => {
+                                                setFeedbackData({ ...feedbackData, donationId: request.donation._id });
+                                                setShowFeedbackModal(true);
+                                            }}
+                                        >
+                                            ⭐ Leave Feedback
+                                        </button>
+                                    )}
+
                                     {request.status === 'pending' && (
                                         <>
                                             <button className="btn-accept" onClick={() => handleAccept(request._id)}>
@@ -383,6 +441,90 @@ const MyRequests = () => {
                             <div className="modal-actions">
                                 <button className="btn-cancel-modal" onClick={() => setSelectedRequest(null)}>Close</button>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Feedback Modal */}
+                {showFeedbackModal && (
+                    <div className="modal-overlay" onClick={() => setShowFeedbackModal(false)}>
+                        <div className="modal-content review-modal" onClick={e => e.stopPropagation()}>
+                            <button className="modal-close" onClick={() => setShowFeedbackModal(false)}>×</button>
+                            <h2>Rate this Donation</h2>
+                            <p className="page-subtitle">Help donors improve by providing honest feedback.</p>
+                            <hr className="modal-divider" />
+
+                            <form onSubmit={handleSubmitFeedback} className="feedback-form">
+                                <div className="form-group">
+                                    <label>Overall Rating</label>
+                                    <div className="star-rating">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <span
+                                                key={star}
+                                                className={`star ${feedbackData.rating >= star ? 'active' : ''}`}
+                                                onClick={() => setFeedbackData({ ...feedbackData, rating: star })}
+                                            >
+                                                ★
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Food Quality</label>
+                                    <select
+                                        value={feedbackData.foodQuality}
+                                        onChange={(e) => setFeedbackData({ ...feedbackData, foodQuality: e.target.value })}
+                                        className="form-control"
+                                        required
+                                    >
+                                        <option value="Excellent">Excellent - Fresh and perfect</option>
+                                        <option value="Good">Good - Standard quality</option>
+                                        <option value="Average">Average - Edible but near end of use</option>
+                                        <option value="Poor">Poor - Quality issues present</option>
+                                        <option value="Spoiled">Spoiled - Unsafe to eat</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Packaging Quality</label>
+                                    <select
+                                        value={feedbackData.packagingQuality}
+                                        onChange={(e) => setFeedbackData({ ...feedbackData, packagingQuality: e.target.value })}
+                                        className="form-control"
+                                        required
+                                    >
+                                        <option value="Intact">Intact - Well sealed</option>
+                                        <option value="Adequate">Adequate - Covered but loose</option>
+                                        <option value="Poor/Leaking">Poor/Leaking - Messy or broken</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Additional Comments</label>
+                                    <textarea
+                                        value={feedbackData.comments}
+                                        onChange={(e) => setFeedbackData({ ...feedbackData, comments: e.target.value })}
+                                        className="form-control feedback-textarea"
+                                        placeholder="Any specific notes or thank you messages for the donor?"
+                                        rows="3"
+                                    ></textarea>
+                                </div>
+
+                                <div className="form-checkbox-group">
+                                    <input
+                                        type="checkbox"
+                                        id="isPublic"
+                                        checked={feedbackData.isPublic}
+                                        onChange={(e) => setFeedbackData({ ...feedbackData, isPublic: e.target.checked })}
+                                    />
+                                    <label htmlFor="isPublic">Make this review public for other NGOs to see</label>
+                                </div>
+
+                                <div className="modal-actions" style={{ marginTop: '1.5rem' }}>
+                                    <button type="submit" className="btn-request-modal">Submit Feedback</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 )}
