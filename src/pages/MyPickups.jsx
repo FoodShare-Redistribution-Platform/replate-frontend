@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
 import './MyPickups.css';
 
 const MyPickups = () => {
@@ -98,7 +97,7 @@ const MyPickups = () => {
     };
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="pickups-container">
                 <div className="pickups-header">
                     <h1>My Pickups</h1>
@@ -193,7 +192,7 @@ const MyPickups = () => {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

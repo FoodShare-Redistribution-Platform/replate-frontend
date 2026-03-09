@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../../components/DashboardLayout';
+
 import { getDashboardStats } from '../../api/admin';
 import {
     Users, Handshake, Building2, Bike, Package, ClipboardList, Truck, Clock,
@@ -89,12 +89,10 @@ const AdminDashboard = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
-                <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-                    <div className="w-10 h-10 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-                    <p className="text-sm text-slate-500">Loading dashboard...</p>
-                </div>
-            </DashboardLayout>
+            <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+                <div className="w-10 h-10 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm text-slate-500">Loading dashboard...</p>
+            </div>
         );
     }
 
@@ -117,78 +115,76 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <DashboardLayout user={user}>
-            <div className="max-w-7xl mx-auto space-y-8">
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                    <div>
-                        <h1 className="text-2xl font-bold text-white tracking-tight">
-                            {getGreeting()}, {user?.fullName}!
-                        </h1>
-                        <p className="text-sm text-slate-400 mt-1.5">
-                            Welcome to the admin control center. Here's your platform overview.
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-violet-500/10 border border-violet-500/20">
-                        <ShieldCheck size={16} className="text-violet-400" />
-                        <span className="text-sm font-medium text-violet-300">Admin</span>
-                    </div>
-                </div>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {statCards.map((card, i) => (
-                        <StatCard
-                            key={i}
-                            {...card}
-                            onClick={() => card.path && navigate(card.path)}
-                        />
-                    ))}
-                </div>
-
-                {/* Quick Actions */}
+        <div className="max-w-7xl mx-auto space-y-8">
+            {/* Header */}
+            <div className="flex items-start justify-between">
                 <div>
-                    <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                        <TrendingUp size={18} className="text-emerald-400" />
-                        Quick Actions
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {quickActions.map((action, i) => {
-                            const Icon = action.icon;
-                            return (
-                                <button
-                                    key={i}
-                                    onClick={() => navigate(action.path)}
-                                    className="group flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800/50 hover:border-emerald-500/30 hover:bg-slate-900 transition-all duration-200 text-left"
-                                >
-                                    <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
-                                        <Icon size={20} className="text-emerald-400" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <h3 className="text-sm font-semibold text-white">{action.label}</h3>
-                                        <p className="text-xs text-slate-500 mt-0.5">{action.desc}</p>
-                                    </div>
-                                    <ArrowRight size={16} className="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" />
-                                </button>
-                            );
-                        })}
-                    </div>
+                    <h1 className="text-2xl font-bold text-white tracking-tight">
+                        {getGreeting()}, {user?.fullName}!
+                    </h1>
+                    <p className="text-sm text-slate-400 mt-1.5">
+                        Welcome to the admin control center. Here's your platform overview.
+                    </p>
                 </div>
-
-                {/* Platform Health */}
-                <div>
-                    <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                        <Activity size={18} className="text-emerald-400" />
-                        Platform Health
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <HealthCard label="Active Users" value={stats?.activeUsers || 0} status="active" />
-                        <HealthCard label="Disabled Users" value={stats?.disabledUsers || 0} status="disabled" />
-                        <HealthCard label="Pending Verifications" value={stats?.pendingVerifications || 0} status="pending" />
-                    </div>
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-violet-500/10 border border-violet-500/20">
+                    <ShieldCheck size={16} className="text-violet-400" />
+                    <span className="text-sm font-medium text-violet-300">Admin</span>
                 </div>
             </div>
-        </DashboardLayout>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {statCards.map((card, i) => (
+                    <StatCard
+                        key={i}
+                        {...card}
+                        onClick={() => card.path && navigate(card.path)}
+                    />
+                ))}
+            </div>
+
+            {/* Quick Actions */}
+            <div>
+                <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <TrendingUp size={18} className="text-emerald-400" />
+                    Quick Actions
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {quickActions.map((action, i) => {
+                        const Icon = action.icon;
+                        return (
+                            <button
+                                key={i}
+                                onClick={() => navigate(action.path)}
+                                className="group flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800/50 hover:border-emerald-500/30 hover:bg-slate-900 transition-all duration-200 text-left"
+                            >
+                                <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                                    <Icon size={20} className="text-emerald-400" />
+                                </div>
+                                <div className="flex-1">
+                                    <h3 className="text-sm font-semibold text-white">{action.label}</h3>
+                                    <p className="text-xs text-slate-500 mt-0.5">{action.desc}</p>
+                                </div>
+                                <ArrowRight size={16} className="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" />
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* Platform Health */}
+            <div>
+                <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Activity size={18} className="text-emerald-400" />
+                    Platform Health
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <HealthCard label="Active Users" value={stats?.activeUsers || 0} status="active" />
+                    <HealthCard label="Disabled Users" value={stats?.disabledUsers || 0} status="disabled" />
+                    <HealthCard label="Pending Verifications" value={stats?.pendingVerifications || 0} status="pending" />
+                </div>
+            </div>
+        </div>
     );
 };
 

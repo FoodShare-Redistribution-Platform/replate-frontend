@@ -152,3 +152,80 @@
         display: none;
     }
 }
+
+/* Google Translate Widget Styling & Overrides */
+iframe.goog-te-banner-frame {
+    display: none !important;
+}
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+html,
+body {
+    top: 0px !important;
+    position: static !important;
+    min-height: 100vh !important;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+
+.goog-tooltip:hover {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.google-translate-container {
+    display: inline-block;
+    height: 24px;
+    overflow: hidden;
+}
+
+.google-translate-container select {
+    background: transparent;
+    border: none;
+    color: var(--text-primary, #ffffff);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    outline: none;
+    padding: 0px 5px;
+    margin-top: -3px;
+    /* vertically align the select dropdown */
+}
+
+.google-translate-container select option {
+    color: black;
+}
+
+/* Hide the "Powered by Google" text and logo */
+.goog-te-gadget {
+    color: transparent !important;
+    font-size: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.goog-te-gadget img {
+    display: none !important;
+}
+
+.goog-logo-link {
+    display: none !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+    color: var(--text-primary, #ffffff) !important;
+    font-size: 0.95rem;
+    margin: 0;
+    padding: 0;
+}
