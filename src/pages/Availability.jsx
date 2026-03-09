@@ -11,7 +11,6 @@ const Availability = () => {
     const [vehicleType, setVehicleType] = useState('two_wheeler');
     const [maxWeight, setMaxWeight] = useState(10);
     const [serviceRadius, setServiceRadius] = useState(5);
-    const [preferredAreas, setPreferredAreas] = useState(['Koramangala', 'Indiranagar']);
     const [schedule, setSchedule] = useState({
         mon: { active: true, slots: [{ start: '09:00', end: '12:00' }, { start: '17:00', end: '20:00' }] },
         tue: { active: true, slots: [{ start: '09:00', end: '12:00' }] },
@@ -47,9 +46,6 @@ const Availability = () => {
 
                     if (userData.volunteerProfile) {
                         setServiceRadius(userData.volunteerProfile.serviceRadius || 5);
-                        if (userData.volunteerProfile.preferredAreas?.length > 0) {
-                            setPreferredAreas(userData.volunteerProfile.preferredAreas);
-                        }
                         if (userData.volunteerProfile.maxWeight !== undefined) {
                             setMaxWeight(userData.volunteerProfile.maxWeight);
                         }
@@ -84,7 +80,6 @@ const Availability = () => {
                     vehicleType,
                     maxWeight,
                     serviceRadius,
-                    preferredAreas,
                     availabilitySchedule: schedule
                 })
             });
@@ -119,7 +114,6 @@ const Availability = () => {
 
         setSchedule(defaultSchedule);
         setServiceRadius(5);
-        setPreferredAreas([]);
         setIsAvailable(false);
 
         // Save these empty/default values to DB
@@ -134,7 +128,6 @@ const Availability = () => {
                 body: JSON.stringify({
                     isAvailable: false,
                     serviceRadius: 5,
-                    preferredAreas: [],
                     availabilitySchedule: defaultSchedule
                 })
             });
@@ -294,21 +287,6 @@ const Availability = () => {
                             </div>
                         </div>
 
-                        {/* Preferred Areas */}
-                        <div className="settings-card">
-                            <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <h3>Preferred Areas</h3>
-                                <button className="edit-areas-btn">+ Edit Areas</button>
-                            </div>
-                            <div className="tags-input-container">
-                                {preferredAreas.map(area => (
-                                    <div key={area} className="area-tag">
-                                        {area} <span>x</span>
-                                    </div>
-                                ))}
-                                {preferredAreas.length === 0 && <span style={{ color: '#64748b', fontSize: '13px' }}>No areas selected</span>}
-                            </div>
-                        </div>
                     </div>
 
                     {/* Right Column: Schedule */}
