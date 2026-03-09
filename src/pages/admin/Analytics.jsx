@@ -7,17 +7,16 @@ import './AdminPages.css';
 const Analytics = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [timeRange, setTimeRange] = useState('This Month');
 
     useEffect(() => {
         fetchStats();
-    }, [timeRange]);
+    }, []);
 
     const fetchStats = async () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const data = await getAnalyticsStats(token, timeRange);
+            const data = await getAnalyticsStats(token, 'All Time');
             setStats(data);
         } catch (error) {
             console.error('Failed to fetch analytics stats', error);
@@ -34,15 +33,9 @@ const Analytics = () => {
             <div className="admin-page-header">
                 <div>
                     <h1>Analytics Dashboard</h1>
-                    <p>Platform performance and impact metrics</p>
+                    <p>Platform performance and impact metrics (All Time)</p>
                 </div>
                 <div className="header-actions">
-                    <select className="time-filter" value={timeRange} onChange={(e) => setTimeRange(e.target.value)}>
-                        <option value="This Week">This Week</option>
-                        <option value="This Month">This Month</option>
-                        <option value="This Year">This Year</option>
-                        <option value="All Time">All Time</option>
-                    </select>
                     <button className="refresh-btn" onClick={fetchStats}>
                         <Clock size={16} /> Refresh
                     </button>
@@ -54,7 +47,9 @@ const Analytics = () => {
                 <div className="kpi-card">
                     <div className="kpi-header">
                         <Package size={18} />
-                        <span className="trend positive">↗ 12.5%</span>
+                        <span className={`trend ${stats.trends.totalDonations >= 0 ? 'positive' : 'negative'}`}>
+                            {stats.trends.totalDonations >= 0 ? '↗' : '↘'} {Math.abs(stats.trends.totalDonations)}%
+                        </span>
                     </div>
                     <h3>{stats.totalDonations.toLocaleString()}</h3>
                     <p>Total Donations</p>
@@ -63,7 +58,9 @@ const Analytics = () => {
                 <div className="kpi-card">
                     <div className="kpi-header">
                         <Heart size={18} color="#e02424" />
-                        <span className="trend positive">↗ 8.2%</span>
+                        <span className={`trend ${stats.trends.servings >= 0 ? 'positive' : 'negative'}`}>
+                            {stats.trends.servings >= 0 ? '↗' : '↘'} {Math.abs(stats.trends.servings)}%
+                        </span>
                     </div>
                     <h3>{stats.servingsDistributed.toLocaleString()}</h3>
                     <p>Servings Distributed</p>
@@ -72,7 +69,7 @@ const Analytics = () => {
                 <div className="kpi-card">
                     <div className="kpi-header">
                         <Users size={18} color="#7e3af2" />
-                        <span className="trend positive">↗ 2.1%</span>
+                        <span className="trend positive">Live</span>
                     </div>
                     <h3>{stats.activeUsers.toLocaleString()}</h3>
                     <p>Active Users</p>
@@ -81,7 +78,9 @@ const Analytics = () => {
                 <div className="kpi-card">
                     <div className="kpi-header">
                         <TrendingUp size={18} color="#0e9f6e" />
-                        <span className="trend positive">↗ 14.7%</span>
+                        <span className={`trend ${stats.trends.waste >= 0 ? 'positive' : 'negative'}`}>
+                            {stats.trends.waste >= 0 ? '↗' : '↘'} {Math.abs(stats.trends.waste)}%
+                        </span>
                     </div>
                     <h3>{stats.wasteReduced.toLocaleString()}kg</h3>
                     <p>Waste Reduced</p>
@@ -90,7 +89,9 @@ const Analytics = () => {
                 <div className="kpi-card">
                     <div className="kpi-header">
                         <Clock size={18} color="#ff5a1f" />
-                        <span className="trend negative">↘ -5.4%</span>
+                        <span className={`trend ${stats.trends.deliveryTime <= 0 ? 'positive' : 'negative'}`}>
+                            {stats.trends.deliveryTime <= 0 ? '↘' : '↗'} {Math.abs(stats.trends.deliveryTime)}%
+                        </span>
                     </div>
                     <h3>{stats.avgDeliveryTime}min</h3>
                     <p>Avg Delivery Time</p>
@@ -99,7 +100,9 @@ const Analytics = () => {
                 <div className="kpi-card">
                     <div className="kpi-header">
                         <ShieldCheck size={18} color="#0694a2" />
-                        <span className="trend positive">↗ 2.1%</span>
+                        <span className={`trend ${stats.trends.successRate >= 0 ? 'positive' : 'negative'}`}>
+                            {stats.trends.successRate >= 0 ? '↗' : '↘'} {Math.abs(stats.trends.successRate)}%
+                        </span>
                     </div>
                     <h3>{stats.successRate}%</h3>
                     <p>Success Rate</p>
@@ -118,9 +121,9 @@ const Analytics = () => {
                             {stats.weeklyDonations.labels.map(L => <span key={L}>{L}</span>)}
                         </div>
                         <div className="mock-legend">
-                            <span>320 <small>Total Donations</small></span>
-                            <span>300 <small>Deliveries</small></span>
-                            <span className="highlight-stat">15,500 <small>Servings</small></span>
+                            <span>{stats.totalDonations} <small>Total Donations</small></span>
+                            <span>{stats.successRate}% <small>Relief Rate</small></span>
+                            <span className="highlight-stat">{stats.servingsDistributed.toLocaleString()} <small>Servings</small></span>
                         </div>
                     </div>
                 </div>

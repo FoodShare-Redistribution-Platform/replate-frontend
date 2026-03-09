@@ -17,18 +17,12 @@ import UserManagement from './pages/admin/UserManagement';
 import VolunteerLiveMapPage from "./pages/VolunteerMap";
 import VolunteerMap from "./pages/VolunteerMap";
 import Impact from './pages/Impact';
-<<<<<<< Updated upstream
 import TrackingMap from "./pages/TrackingMap";
 import AdminFleetMap from "./pages/admin/AdminFleetMap";
-=======
 import FoodManagement from './pages/admin/FoodManagement';
 import AdminAssignments from './pages/admin/AdminAssignments';
 import Analytics from './pages/admin/Analytics';
 import DashboardLayoutProvider from './components/DashboardLayoutProvider';
-
-
-
->>>>>>> Stashed changes
 
 
 

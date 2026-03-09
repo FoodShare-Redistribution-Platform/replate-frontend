@@ -15,6 +15,7 @@ const FoodManagement = () => {
     }, []);
 
     const fetchDonations = async () => {
+        setLoading(true);
         try {
             const token = localStorage.getItem('token');
             const data = await getDonations(token);
@@ -27,11 +28,23 @@ const FoodManagement = () => {
         }
     };
 
+    const isExpiringSoon = (expiryDate, expiryTime) => {
+        if (!expiryDate || !expiryTime) return false;
+        try {
+            const expiryDateTime = new Date(`${expiryDate}T${expiryTime}`);
+            const now = new Date();
+            const diffInHours = (expiryDateTime - now) / (1000 * 60 * 60);
+            return diffInHours > 0 && diffInHours <= 24;
+        } catch (e) {
+            return false;
+        }
+    };
+
     const stats = {
         total: donations.length,
-        available: donations.filter(d => d.status === 'available').length,
-        claimed: donations.filter(d => ['claimed', 'picked_up', 'delivered'].includes(d.status)).length,
-        expiringSoon: 0 // Mock stat for now
+        available: donations.filter(d => d.status === 'pending').length,
+        claimed: donations.filter(d => ['accepted', 'assigned', 'in_transit', 'picked_up', 'delivered'].includes(d.status)).length,
+        expiringSoon: donations.filter(d => d.status === 'pending' && isExpiringSoon(d.expiryDate, d.expiryTime)).length
     };
 
     const filteredDonations = donations.filter(d => {
@@ -39,6 +52,8 @@ const FoodManagement = () => {
         if (categoryFilter !== 'All Categories' && d.foodType !== categoryFilter) return false;
         return true;
     });
+
+    if (loading) return <div className="loading-state">Loading Donations...</div>;
 
     return (
         <div className="admin-page-container">

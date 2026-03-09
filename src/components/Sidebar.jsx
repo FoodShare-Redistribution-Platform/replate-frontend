@@ -32,24 +32,24 @@ const Sidebar = ({ user }) => {
     }, [navigate]);
 
     const handleTrackingClick = async () => {
-    const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
 
-    const res = await fetch(
-        "http://localhost:5001/api/assignments/volunteer-active",
-        {
-            headers: { Authorization: `Bearer ${token}` }
+        const res = await fetch(
+            "http://localhost:5001/api/assignments/volunteer-active",
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+        );
+
+        if (!res.ok) {
+            alert("No active delivery");
+            return;
         }
-    );
 
-    if (!res.ok) {
-        alert("No active delivery");
-        return;
-    }
+        const assignment = await res.json();
 
-    const assignment = await res.json();
-
-    navigate(`/tracking/${assignment._id}`);
-};
+        navigate(`/tracking/${assignment._id}`);
+    };
 
     const getInitials = (name) => {
         if (!name) return '?';
@@ -64,29 +64,10 @@ const Sidebar = ({ user }) => {
         switch (user?.role) {
             case 'donor':
                 return [
-<<<<<<< Updated upstream
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
-                    { name: t('sidebar.donateFood', 'Donate Food'), enName: 'donate food', icon: '🍱', path: '/donate-food' },
-                    { name: t('sidebar.myDonations', 'My Donations'), enName: 'my donations', icon: '📦', path: '/my-donations' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️',  isTracking: true },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
-                ];
-            case 'ngo':
-                return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
-                    { name: t('sidebar.availableFood', 'Available Food'), enName: 'available food', icon: '🍱', path: '/available-food' },
-                    { name: t('sidebar.myRequests', 'My Requests'), enName: 'my requests', icon: '📦', path: '/my-requests' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️',  isTracking: true },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
-=======
                     { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
                     { name: 'Donate Food', enName: 'donate food', icon: '🍱', path: '/donate-food' },
                     { name: 'My Donations', enName: 'my donations', icon: '📦', path: '/my-donations' },
-                    { name: 'Live Map', enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', isTracking: true },
                     { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
                     { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
                     { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
@@ -96,11 +77,10 @@ const Sidebar = ({ user }) => {
                     { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
                     { name: 'Available Food', enName: 'available food', icon: '🍱', path: '/available-food' },
                     { name: 'My Requests', enName: 'my requests', icon: '📦', path: '/my-requests' },
-                    { name: 'Live Map', enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', isTracking: true },
                     { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
                     { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
                     { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
->>>>>>> Stashed changes
                 ];
             case 'volunteer':
                 return [
@@ -115,25 +95,13 @@ const Sidebar = ({ user }) => {
                 ];
             case 'admin':
                 return [
-<<<<<<< Updated upstream
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/admin' },
-                    { name: t('sidebar.allUsers', 'All Users'), enName: 'all users', icon: '👥', path: '/admin/users' },
-                    { name: t('sidebar.donors', 'Donors'), enName: 'donors', icon: '🤝', path: '/admin/users?role=donor' },
-                    { name: t('sidebar.ngos', 'NGOs'), enName: 'ngos', icon: '🏢', path: '/admin/users?role=ngo' },
-                    { name: t('sidebar.volunteers', 'Volunteers'), enName: 'volunteers', icon: '🚴', path: '/admin/users?role=volunteer' },
-                    { name: t('sidebar.donations', 'Donations'), enName: 'donations', icon: '📦', disabled: true },
-                    { name: t('sidebar.assignments', 'Assignments'), enName: 'assignments', icon: '🚚', disabled: true },
-                     { name: t('sidebar.liveMap', 'Fleet Map'), enName: 'live map', icon: '🗺️',  path: '/admin/live-map'},
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' }
-=======
                     { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/admin' },
-                    { name: 'Live Map', enName: 'live map', icon: '🗺️', disabled: true },
+                    { name: 'Fleet Map', enName: 'fleet map', icon: '🗺️', path: '/admin/live-map' },
                     { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
                     { name: 'Users', enName: 'users', icon: '👥', path: '/admin/users' },
                     { name: 'Donations', enName: 'donations', icon: '🍱', path: '/admin/food' },
                     { name: 'Assignments', enName: 'assignments', icon: '📝', path: '/admin/assignments' },
                     { name: 'Analytics', enName: 'analytics', icon: '📉', path: '/admin/analytics' }
->>>>>>> Stashed changes
                 ];
             default:
                 return [];
@@ -141,37 +109,6 @@ const Sidebar = ({ user }) => {
     }, [user?.role]);
 
     const menuItems = React.useMemo(() => getMenuItems(), [getMenuItems]);
-
-    const handleVoiceCommand = React.useCallback((transcript) => {
-        if (!transcript) return;
-        let lowerTranscript = transcript.toLowerCase().trim().replace(/[.,?!]$/g, '');
-        lowerTranscript = lowerTranscript.replace(/^(go to|go|navigate to|navigate|take me to|take me|open)\s+/i, '');
-
-        if (lowerTranscript.includes("logout") || lowerTranscript.includes("sign out")) {
-            handleLogout();
-            return;
-        }
-
-        for (const item of menuItems) {
-            if (item.disabled) continue;
-            const lowerNavName = item.name.toLowerCase().trim();
-            const lowerEnName = item.enName?.toLowerCase().trim() || "";
-
-            if (lowerTranscript.includes(lowerNavName) || lowerNavName.includes(lowerTranscript) ||
-                (lowerEnName && (lowerTranscript.includes(lowerEnName) || lowerEnName.includes(lowerTranscript))) ||
-                (lowerEnName === "profile" && lowerTranscript.includes("account"))) {
-
-                if (item.isLiveMap) {
-                    handleLiveMapClick();
-                } else if (item.path) {
-                    navigate(item.path);
-                }
-                return;
-            }
-        }
-    }, [menuItems, handleLogout, handleLiveMapClick, navigate]);
-
-    const { isListening, toggleListening, isSupported } = useVoiceRecognition(handleVoiceCommand);
 
     return (
         <div className="sidebar">
@@ -192,10 +129,10 @@ const Sidebar = ({ user }) => {
                 <div className="user-details">
                     <h3>{user?.role === "admin" ? "System Admin" : user?.fullName}</h3>
 
-<p className="user-role">
-{user?.role === "admin" ? "Admin" :
-user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
-</p>
+                    <p className="user-role">
+                        {user?.role === "admin" ? "Admin" :
+                            user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
+                    </p>
                 </div>
             </div>
 
@@ -218,17 +155,17 @@ user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Role"}
                         );
                     }
                     if (item.isTracking) {
-                            return (
-                                <div
+                        return (
+                            <div
                                 key={index}
                                 className="nav-item"
                                 onClick={handleTrackingClick}
-                                >
+                            >
                                 <span className="nav-icon">{item.icon}</span>
                                 <span className="nav-text">{item.name}</span>
-                                </div>
-                            );
-                            }
+                            </div>
+                        );
+                    }
                     return (
                         <NavLink
                             key={index}

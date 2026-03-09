@@ -13,6 +13,7 @@ const AdminAssignments = () => {
     }, []);
 
     const fetchAssignments = async () => {
+        setLoading(true);
         try {
             const token = localStorage.getItem('token');
             const data = await getAssignments(token);
@@ -27,8 +28,8 @@ const AdminAssignments = () => {
     const stats = {
         total: assignments.length,
         pending: assignments.filter(a => a.status === 'pending').length,
-        inTransit: assignments.filter(a => a.status === 'in_transit' || a.status === 'picked_up').length,
-        completed: assignments.filter(a => a.status === 'completed' || a.status === 'delivered').length
+        inTransit: assignments.filter(a => ['accepted', 'in_transit', 'picked_up'].includes(a.status)).length,
+        completed: assignments.filter(a => ['completed', 'delivered'].includes(a.status)).length
     };
 
     const filteredAssignments = assignments.filter(a => {
@@ -43,6 +44,8 @@ const AdminAssignments = () => {
         return status.charAt(0).toUpperCase() + status.slice(1);
     };
 
+    if (loading) return <div className="loading-state">Loading Assignments...</div>;
+
     return (
         <div className="admin-page-container">
             <div className="admin-page-header">
@@ -50,7 +53,10 @@ const AdminAssignments = () => {
                     <h1>Assignments</h1>
                     <p>Overview of all logistics and volunteer transport assignments across the platform</p>
                 </div>
-                <button className="refresh-btn" onClick={fetchAssignments}>
+                <button
+                    className="refresh-btn"
+                    onClick={fetchAssignments}
+                >
                     <Clock size={16} /> Refresh
                 </button>
             </div>

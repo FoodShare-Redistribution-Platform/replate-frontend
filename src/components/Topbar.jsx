@@ -16,7 +16,7 @@ const Topbar = ({ user }) => {
                     { name: 'Dashboard', enName: 'dashboard', path: '/dashboard' },
                     { name: 'Donate Food', enName: 'donate food', path: '/donate-food' },
                     { name: 'My Donations', enName: 'my donations', path: '/my-donations' },
-                    { name: 'Live Map', enName: 'live map', disabled: true },
+                    { name: 'Live Map', enName: 'live map', isTracking: true },
                     { name: 'Notifications', enName: 'notifications', path: '/notifications' },
                     { name: 'Impact', enName: 'impact', path: '/impact' },
                     { name: 'Profile', enName: 'profile', path: '/profile' }
@@ -26,7 +26,7 @@ const Topbar = ({ user }) => {
                     { name: 'Dashboard', enName: 'dashboard', path: '/dashboard' },
                     { name: 'Available Food', enName: 'available food', path: '/available-food' },
                     { name: 'My Requests', enName: 'my requests', path: '/my-requests' },
-                    { name: 'Live Map', enName: 'live map', disabled: true },
+                    { name: 'Live Map', enName: 'live map', isTracking: true },
                     { name: 'Notifications', enName: 'notifications', path: '/notifications' },
                     { name: 'Impact', enName: 'impact', path: '/impact' },
                     { name: 'Profile', enName: 'profile', path: '/profile' }
@@ -45,13 +45,12 @@ const Topbar = ({ user }) => {
             case 'admin':
                 return [
                     { name: 'Dashboard', enName: 'dashboard', path: '/admin' },
-                    { name: 'All Users', enName: 'all users', path: '/admin/users' },
-                    { name: 'Donors', enName: 'donors', path: '/admin/users?role=donor' },
-                    { name: 'NGOs', enName: 'ngos', path: '/admin/users?role=ngo' },
-                    { name: 'Volunteers', enName: 'volunteers', path: '/admin/users?role=volunteer' },
-                    { name: 'Donations', enName: 'donations', disabled: true },
-                    { name: 'Assignments', enName: 'assignments', disabled: true },
-                    { name: 'Impact', enName: 'impact', path: '/impact' }
+                    { name: 'Fleet Map', enName: 'fleet map', path: '/admin/live-map' },
+                    { name: 'Impact', enName: 'impact', path: '/impact' },
+                    { name: 'Users', enName: 'users', path: '/admin/users' },
+                    { name: 'Donations', enName: 'donations', path: '/admin/food' },
+                    { name: 'Assignments', enName: 'assignments', path: '/admin/assignments' },
+                    { name: 'Analytics', enName: 'analytics', path: '/admin/analytics' }
                 ];
             default:
                 return [];
@@ -67,6 +66,21 @@ const Topbar = ({ user }) => {
             if (!res.ok) return;
             const assignment = await res.json();
             navigate(`/live-map/${assignment._id}`);
+        } catch (err) { }
+    }, [navigate]);
+
+    const handleTrackingClick = React.useCallback(async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const res = await fetch("http://localhost:5001/api/assignments/volunteer-active", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (!res.ok) {
+                alert("No active delivery tracking available");
+                return;
+            }
+            const assignment = await res.json();
+            navigate(`/tracking/${assignment._id}`);
         } catch (err) { }
     }, [navigate]);
 
@@ -101,6 +115,8 @@ const Topbar = ({ user }) => {
 
                 if (item.isLiveMap) {
                     handleLiveMapClick();
+                } else if (item.isTracking) {
+                    handleTrackingClick();
                 } else if (item.path) {
                     navigate(item.path);
                 }
@@ -260,13 +276,13 @@ const Topbar = ({ user }) => {
                         {getInitials(user?.fullName)}
                     </div>
                     <div className="user-info-small">
-                       <span className="user-name-small">
-{user?.role === "admin" ? "System Admin" : user?.fullName || "User"}
-</span>
+                        <span className="user-name-small">
+                            {user?.role === "admin" ? "System Admin" : user?.fullName || "User"}
+                        </span>
 
-<span className="user-role-small">
-{user?.role === "admin" ? "Admin" : user?.role || "Role"}
-</span>
+                        <span className="user-role-small">
+                            {user?.role === "admin" ? "Admin" : user?.role || "Role"}
+                        </span>
                     </div>
                 </div>
             </div>
