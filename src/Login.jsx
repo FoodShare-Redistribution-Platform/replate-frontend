@@ -51,7 +51,12 @@ const Login = () => {
                     fullName: data.fullName,
                     role: data.role,
                     verificationStatus: data.verificationStatus,
-                    status: data.status
+                    status: data.status,
+                    organizationName: data.organizationName,
+                    address: data.address,
+                    city: data.city,
+                    pincode: data.pincode,
+                    location: data.location
                 }));
 
                 // Redirect admin to admin dashboard, others to user dashboard

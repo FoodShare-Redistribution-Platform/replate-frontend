@@ -19,7 +19,8 @@ import VolunteerMap from "./pages/VolunteerMap";
 import Impact from './pages/Impact';
 import TrackingMap from "./pages/TrackingMap";
 import AdminFleetMap from "./pages/admin/AdminFleetMap";
-
+import DonorLiveMap from "./pages/DonorLiveMap";
+import NgoLiveMap from "./pages/NgoLiveMap";
 
 
 
@@ -61,6 +62,8 @@ function App() {
         />
         <Route path="/tracking/:assignmentId" element={<TrackingMap />} />
         <Route path="/admin/live-map" element={<AdminFleetMap />} />
+         <Route path="/donor/live-map" element={<DonorLiveMap />} />
+        <Route path="/ngo/live-map" element={<NgoLiveMap />} />
 
 
 
