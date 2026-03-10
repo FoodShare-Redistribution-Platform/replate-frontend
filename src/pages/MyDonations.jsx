@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../components/DashboardLayout';
 import './MyDonations.css';
 
 const MyDonations = () => {
@@ -35,7 +34,7 @@ const MyDonations = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/api/users/me', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -60,7 +59,7 @@ const MyDonations = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:5001/api/donations', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/donations`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -137,17 +136,17 @@ const MyDonations = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="loading-container">
                     <div className="spinner"></div>
                     <p>Loading...</p>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="my-donations-page">
                 {/* Header */}
                 <div className="page-header">
@@ -357,7 +356,7 @@ const MyDonations = () => {
                                                         if (window.confirm(`Are you sure you want to delete "${donation.foodName}"? This action cannot be undone.`)) {
                                                             try {
                                                                 const token = localStorage.getItem('token');
-                                                                const response = await fetch(`http://localhost:5001/api/donations/${donation._id}`, {
+                                                                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/donations/${donation._id}`, {
                                                                     method: 'DELETE',
                                                                     headers: {
                                                                         'Authorization': `Bearer ${token}`
@@ -390,7 +389,7 @@ const MyDonations = () => {
                     )}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

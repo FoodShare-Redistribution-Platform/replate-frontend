@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5001/api/admin';
-
+//const API_URL = 'http://localhost:5001/api/admin';
+const API_URL = `${import.meta.env.VITE_API_URL}/api/admin`;
 const authHeader = (token) => ({
     headers: { Authorization: `Bearer ${token}` },
 });
@@ -68,5 +68,13 @@ export const getRequests = async (token) => {
 
 export const getAssignments = async (token) => {
     const res = await axios.get(`${API_URL}/assignments`, authHeader(token));
+    return res.data;
+};
+
+export const getAnalyticsStats = async (token, timeRange = 'This Month') => {
+    const res = await axios.get(`${API_URL}/analytics`, {
+        ...authHeader(token),
+        params: { timeRange }
+    });
     return res.data;
 };

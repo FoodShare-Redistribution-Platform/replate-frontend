@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../components/DashboardLayout';
 import './Profile.css';
 
 const Profile = () => {
@@ -24,7 +23,7 @@ const Profile = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/api/users/me', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -69,7 +68,7 @@ const Profile = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:5001/api/users/me', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,17 +104,17 @@ const Profile = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="loading-container">
                     <div className="spinner"></div>
                     <p>Loading profile...</p>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="profile-page">
                 {/* Page Header */}
                 <div className="page-header">
@@ -304,7 +303,7 @@ const Profile = () => {
                     */}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

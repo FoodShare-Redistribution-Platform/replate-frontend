@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
 import './Assignments.css';
 
 const Assignments = () => {
@@ -19,7 +18,7 @@ const Assignments = () => {
     const fetchAssignments = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/assignments/available', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/assignments/available`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -42,7 +41,7 @@ const Assignments = () => {
     const handleAccept = async (donationId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/assignments/claim', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/assignments/claim`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,7 +63,7 @@ const Assignments = () => {
     };
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="assignments-container">
                 <div className="assignments-header">
                     <h1>Available Assignments</h1>
@@ -150,7 +149,7 @@ const Assignments = () => {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

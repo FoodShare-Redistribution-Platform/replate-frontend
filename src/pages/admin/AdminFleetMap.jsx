@@ -35,23 +35,23 @@ function AdminFleetMap() {
 
 
 
-  
+
 
   useEffect(() => {
 
     const storedUser = localStorage.getItem("user");
 
-if(storedUser){
-setUser(JSON.parse(storedUser));
-}
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
 
-    
+
     async function load() {
 
       try {
 
         const res = await fetch(
-          "http://localhost:5001/api/map/assignments/active",
+          `${import.meta.env.VITE_API_URL}/api/map/assignments/active`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -94,121 +94,121 @@ setUser(JSON.parse(storedUser));
     }
 
     load();
-    
+
 
     const interval = setInterval(load, 5000);
 
     return () => clearInterval(interval);
 
-    
+
 
   }, [token]);
 
   return (
-<DashboardLayout user={user}>
+    <DashboardLayout user={user}>
 
-<div className="pickups-container">
+      <div className="pickups-container">
 
-<div className="pickups-header">
-<h1>Admin Fleet Map</h1>
-<p>Monitor all active deliveries in real-time</p>
-</div>
+        <div className="pickups-header">
+          <h1>Admin Fleet Map</h1>
+          <p>Monitor all active deliveries in real-time</p>
+        </div>
 
-<div style={{display:"grid", gridTemplateColumns:"2fr 1fr", gap:"20px"}}>
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "20px" }}>
 
-{/* MAP */}
-<div style={{height:"80vh"}}>
+          {/* MAP */}
+          <div style={{ height: "80vh" }}>
 
-<MapContainer
-center={[13.0827,80.2707]}
-zoom={12}
-style={{height:"100%", width:"100%"}}
->
+            <MapContainer
+              center={[13.0827, 80.2707]}
+              zoom={12}
+              style={{ height: "100%", width: "100%" }}
+            >
 
-<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-{assignments.map((a)=>{
+              {assignments.map((a) => {
 
-const donor = a.donorCoords;
-const ngo = a.ngoCoords;
+                const donor = a.donorCoords;
+                const ngo = a.ngoCoords;
 
-if(!donor || !ngo) return null;
+                if (!donor || !ngo) return null;
 
-let volunteer = a.currentLocation?.lat ? a.currentLocation : donor;
+                let volunteer = a.currentLocation?.lat ? a.currentLocation : donor;
 
-const path = [
-[volunteer.lat, volunteer.lng],
-[donor.lat, donor.lng],
-[ngo.lat, ngo.lng]
-];
+                const path = [
+                  [volunteer.lat, volunteer.lng],
+                  [donor.lat, donor.lng],
+                  [ngo.lat, ngo.lng]
+                ];
 
-return(
+                return (
 
-<>
+                  <>
 
-<Marker position={[volunteer.lat, volunteer.lng]} icon={vehicleIcon}>
-<Popup>
-<b>Volunteer</b><br/>
-{a.volunteer?.name}
-</Popup>
-</Marker>
+                    <Marker position={[volunteer.lat, volunteer.lng]} icon={vehicleIcon}>
+                      <Popup>
+                        <b>Volunteer</b><br />
+                        {a.volunteer?.name}
+                      </Popup>
+                    </Marker>
 
-<Marker position={[donor.lat, donor.lng]} icon={sourceIcon}>
-<Popup>
-<b>Pickup</b><br/>
-{a.donation?.pickupAddress}
-</Popup>
-</Marker>
+                    <Marker position={[donor.lat, donor.lng]} icon={sourceIcon}>
+                      <Popup>
+                        <b>Pickup</b><br />
+                        {a.donation?.pickupAddress}
+                      </Popup>
+                    </Marker>
 
-<Marker position={[ngo.lat, ngo.lng]} icon={destinationIcon}>
-<Popup>
-<b>NGO</b><br/>
-{a.donation?.acceptedBy?.name}
-</Popup>
-</Marker>
+                    <Marker position={[ngo.lat, ngo.lng]} icon={destinationIcon}>
+                      <Popup>
+                        <b>NGO</b><br />
+                        {a.donation?.acceptedBy?.name}
+                      </Popup>
+                    </Marker>
 
-<Polyline positions={path} color="#ff6b6b" weight={4}/>
+                    <Polyline positions={path} color="#ff6b6b" weight={4} />
 
-</>
+                  </>
 
-);
+                );
 
-})}
+              })}
 
-</MapContainer>
+            </MapContainer>
 
-</div>
+          </div>
 
 
-{/* DELIVERY CARDS */}
-<div style={{overflowY:"auto", maxHeight:"80vh"}}>
+          {/* DELIVERY CARDS */}
+          <div style={{ overflowY: "auto", maxHeight: "80vh" }}>
 
-{assignments.map(a=>(
-<div key={a.id} className="pickup-card">
+            {assignments.map(a => (
+              <div key={a.id} className="pickup-card">
 
-<div className="pickup-info">
+                <div className="pickup-info">
 
-<h4>{a.donation?.foodName}</h4>
+                  <h4>{a.donation?.foodName}</h4>
 
-<div className="pickup-route">
-<span>🟢 Pickup: {a.donation?.pickupAddress}</span>
-<span>🔴 NGO: {a.donation?.acceptedBy?.name}</span>
-<span>🚚 Volunteer: {a.volunteer?.name}</span>
-</div>
+                  <div className="pickup-route">
+                    <span>🟢 Pickup: {a.donation?.pickupAddress}</span>
+                    <span>🔴 NGO: {a.donation?.acceptedBy?.name}</span>
+                    <span>🚚 Volunteer: {a.volunteer?.name}</span>
+                  </div>
 
-<div style={{marginTop:"8px"}}>
-<span className={`status-badge ${a.status}`}>
-{a.status?.replace("_"," ").toUpperCase()}
-</span>
-</div>
-</div>
-</div>
-))}
-</div>
-</div>
-</div>
-</DashboardLayout>
-);
+                  <div style={{ marginTop: "8px" }}>
+                    <span className={`status-badge ${a.status}`}>
+                      {a.status?.replace("_", " ").toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
 }
 
 export default AdminFleetMap;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../components/DashboardLayout';
 import './MyPickups.css';
 
 const MyPickups = () => {
@@ -26,7 +25,7 @@ const MyPickups = () => {
             const user = JSON.parse(userStr);
             const userId = user?.id || user?._id;
 
-            const response = await fetch(`http://localhost:5001/api/assignments/volunteer/${userId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/assignments/volunteer/${userId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -55,8 +54,8 @@ const MyPickups = () => {
 
     const handleStatusUpdate = async (assignmentId, action) => {
         const endpoint = action === 'pickup'
-            ? `http://localhost:5001/api/assignments/${assignmentId}/update-location` // Using update-location to trigger transit
-            : `http://localhost:5001/api/assignments/${assignmentId}/complete`;
+            ? `${import.meta.env.VITE_API_URL}/api/assignments/${assignmentId}/update-location` // Using update-location to trigger transit
+            : `${import.meta.env.VITE_API_URL}/api/assignments/${assignmentId}/complete`;
 
         const body = action === 'pickup'
             ? { lat: 12.9716, lng: 77.5946 } // Default to Bangalore coordinates
@@ -98,7 +97,7 @@ const MyPickups = () => {
     };
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="pickups-container">
                 <div className="pickups-header">
                     <h1>My Pickups</h1>
@@ -176,24 +175,24 @@ const MyPickups = () => {
                                             </span>
                                         </div>
                                     </div>
-                                 <div className="pickup-actions">
-                                {pickup.status !== "completed" && (
-                                    <div className="pickup-phase">
-                                    {pickup.status === "assigned" || pickup.status === "accepted"
-                                        ? "Awaiting Pickup"
-                                        : pickup.status === "in_transit"
-                                        ? "Delivering"
-                                        : pickup.status}
+                                    <div className="pickup-actions">
+                                        {pickup.status !== "completed" && (
+                                            <div className="pickup-phase">
+                                                {pickup.status === "assigned" || pickup.status === "accepted"
+                                                    ? "Awaiting Pickup"
+                                                    : pickup.status === "in_transit"
+                                                        ? "Delivering"
+                                                        : pickup.status}
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                                </div>
                                 </div>
                             ))
                         )}
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

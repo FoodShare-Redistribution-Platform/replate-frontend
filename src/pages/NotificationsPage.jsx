@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../components/Sidebar';
-import Topbar from '../components/Topbar';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import './NotificationsPage.css';
 
 const NotificationsPage = () => {
+    const { user } = useOutletContext();
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        setUser(storedUser);
-
-        fetchNotifications();
-    }, []);
-
-    const fetchNotifications = async () => {
+    const fetchNotifications = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/notifications', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -30,12 +22,16 @@ const NotificationsPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchNotifications();
+    }, [fetchNotifications]);
 
     const markAsRead = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5001/api/notifications/${id}/read`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/${id}/read`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -50,7 +46,7 @@ const NotificationsPage = () => {
     const markAllAsRead = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/notifications/read-all', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/read-all`, {
                 method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -92,7 +88,7 @@ const NotificationsPage = () => {
         e.stopPropagation(); // prevent clicking the background
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5001/api/notifications/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -108,7 +104,7 @@ const NotificationsPage = () => {
         if (!window.confirm("Are you sure you want to delete all notifications?")) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/notifications/clear-all', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notifications/clear-all`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -121,70 +117,64 @@ const NotificationsPage = () => {
     };
 
     return (
-        <div className="layout">
-            <Sidebar user={user} />
-            <div className="main-content">
-                <Topbar user={user} />
-                <div className="page-container">
-                    <div className="page-header">
-                        <div>
-                            <h1>Notifications</h1>
-                            <p>Stay updated with your latest alerts</p>
-                        </div>
-                        {notifications.length > 0 && (
-                            <div>
-                                <button className="mark-all-btn" onClick={markAllAsRead}>
-                                    Mark all as read
-                                </button>
-                                <button className="clear-all-btn" onClick={clearAllNotifications}>
-                                    Clear all
-                                </button>
-                            </div>
-                        )}
-                    </div>
-
-                    {loading ? (
-                        <div className="loading-state">Loading notifications...</div>
-                    ) : notifications.length === 0 ? (
-                        <div className="empty-state">
-                            <div className="empty-icon">🔔</div>
-                            <h3>All caught up!</h3>
-                            <p>You don't have any notifications at the moment.</p>
-                        </div>
-                    ) : (
-                        <div className="notifications-list">
-                            {notifications.map(notification => (
-                                <div
-                                    key={notification._id}
-                                    className={`notification-item ${notification.isRead ? 'read' : 'unread'}`}
-                                    onClick={() => handleNotificationClick(notification)}
-                                >
-                                    <div className="notification-icon">
-                                        {getIcon(notification.type)}
-                                    </div>
-                                    <div className="notification-content">
-                                        <div className="notification-header">
-                                            <h3>{notification.title}</h3>
-                                            <span className="notification-time">
-                                                {new Date(notification.createdAt).toLocaleString()}
-                                            </span>
-                                        </div>
-                                        <p>{notification.message}</p>
-                                    </div>
-                                    {!notification.isRead && <div className="unread-dot"></div>}
-                                    <button
-                                        className="dismiss-btn"
-                                        onClick={(e) => deleteNotification(e, notification._id)}
-                                        title="Dismiss this notification"
-                                    >
-                                        ×
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+        <div className="admin-page-container notifications-page">
+            <div className="page-header">
+                <div>
+                    <h1>Notifications</h1>
+                    <p>Stay updated with your latest alerts</p>
                 </div>
+                {notifications.length > 0 && (
+                    <div className="header-actions" style={{ display: 'flex', gap: '10px' }}>
+                        <button className="mark-all-btn" onClick={markAllAsRead}>
+                            Mark all as read
+                        </button>
+                        <button className="clear-all-btn" onClick={clearAllNotifications}>
+                            Clear all
+                        </button>
+                    </div>
+                )}
             </div>
+
+            {loading ? (
+                <div className="loading-state">Loading notifications...</div>
+            ) : notifications.length === 0 ? (
+                <div className="empty-state">
+                    <div className="empty-icon">🔔</div>
+                    <h3>All caught up!</h3>
+                    <p>You don't have any notifications at the moment.</p>
+                </div>
+            ) : (
+                <div className="notifications-list">
+                    {notifications.map(notification => (
+                        <div
+                            key={notification._id}
+                            className={`notification-item ${notification.isRead ? 'read' : 'unread'}`}
+                            onClick={() => handleNotificationClick(notification)}
+                        >
+                            <div className="notification-icon">
+                                {getIcon(notification.type)}
+                            </div>
+                            <div className="notification-content">
+                                <div className="notification-header">
+                                    <h3>{notification.title}</h3>
+                                    <span className="notification-time">
+                                        {new Date(notification.createdAt).toLocaleString()}
+                                    </span>
+                                </div>
+                                <p>{notification.message}</p>
+                            </div>
+                            {!notification.isRead && <div className="unread-dot"></div>}
+                            <button
+                                className="dismiss-btn"
+                                onClick={(e) => deleteNotification(e, notification._id)}
+                                title="Dismiss this notification"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

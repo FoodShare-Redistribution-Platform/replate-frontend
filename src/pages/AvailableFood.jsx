@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../components/DashboardLayout';
 import './AvailableFood.css';
 
 const AvailableFood = () => {
@@ -20,7 +19,7 @@ const AvailableFood = () => {
     const fetchUser = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/users/me', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -37,7 +36,7 @@ const AvailableFood = () => {
     const fetchAvailableDonations = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/donations/available', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/donations/available`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -56,7 +55,7 @@ const AvailableFood = () => {
     const handleRequestFood = async (donationId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5001/api/requests', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/requests`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -113,16 +112,16 @@ const AvailableFood = () => {
 
     if (loading) {
         return (
-            <DashboardLayout user={user}>
+            <>
                 <div className="available-food-page">
                     <div className="loading">Loading available food...</div>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="available-food-page">
                 {/* Header */}
                 <div className="page-header">
@@ -305,7 +304,7 @@ const AvailableFood = () => {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

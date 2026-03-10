@@ -1,6 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-
 // Map your app's language codes to SpeechRecognition language tags
 const langMap = {
     en: 'en-IN',
@@ -10,7 +8,6 @@ const langMap = {
 };
 
 export const useVoiceRecognition = (onResultCallback) => {
-    const { i18n } = useTranslation();
     const [isListening, setIsListening] = useState(false);
     const recognitionRef = useRef(null);
     const callbackRef = useRef(onResultCallback);
@@ -27,8 +24,8 @@ export const useVoiceRecognition = (onResultCallback) => {
             recog.continuous = false; // Stop after a single phrase
             recog.interimResults = false; // Only get final results for commands
 
-            // Update the voice recognition language based on the user's selected app language!
-            recog.lang = langMap[i18n.language] || 'en-IN';
+            // Update the voice recognition language to default English
+            recog.lang = 'en-IN';
 
             recog.onresult = (event) => {
                 const transcript = Array.from(event.results)
@@ -51,7 +48,7 @@ export const useVoiceRecognition = (onResultCallback) => {
         } else {
             console.warn("Speech recognition is not supported in this browser.");
         }
-    }, [i18n.language]); // Re-initialize only if language changes
+    }, []); // Re-initialize once
 
     const toggleListening = useCallback(() => {
         if (isListening) {
