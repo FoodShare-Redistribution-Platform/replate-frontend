@@ -32,16 +32,37 @@ graph LR
 *   **Testing**: Playwright (E2E testing)
 
 ### 4. Repository Structure
-The project is organized to ensure maintainability and clear separation of UI, logic, and services.
+The Replate Frontend is structured to support complex role-based routing and a sophisticated design system.
 
-| Directory | Description |
+#### 📂 Directory Tree
+```text
+replate-frontend/
+├── public/                 # Static assets (logos, icons, manifests)
+├── src/
+│   ├── api/                # Axios API services for each module (Admin, Auth, Donation)
+│   ├── assets/             # Global styles and static images
+│   ├── components/         # Modular UI elements
+│   │   ├── donate/         # Multi-step donation form components
+│   │   ├── Sidebar.jsx     # Dynamic navigation sidebar
+│   │   └── DashboardLayout.jsx # Base shell for protected views
+│   ├── hooks/              # Custom React hooks (Voice Recognition, Notifications)
+│   ├── icons/              # Optimized Icon components
+│   ├── pages/              # Primary view controllers
+│   │   ├── admin/          # Specialized administrative sub-pages
+│   │   ├── Login.jsx       # Unified authentication entry
+│   │   └── Impact.jsx      # Sustainability and stats visualization
+│   ├── App.jsx             # Main routing and provider configuration
+│   └── main.jsx            # Application bootstrap entry point
+└── tests/                  # Playwright E2E automation suites
+```
+
+#### 🧩 Component Breakdown
+| Module | Description |
 | :--- | :--- |
-| `src/api/` | Centeralized API calls and Axios configuration. |
-| `src/components/` | Reusable UI components (Modals, Navbars, Layouts). |
-| `src/pages/` | Primary page views (Admin, Donor, NGO, Volunteer). |
-| `src/hooks/` | Custom React hooks for shared logic (Voice Recognition, etc.). |
-| `src/assets/` | Static assets including images and global styles. |
-| `tests/` | Playwright E2E test specifications. |
+| **`src/components/donate`** | Contains steps for `CategoryStep`, `FoodDetailsStep`, `PickupStep`, and `SummaryStep`. |
+| **`src/pages/admin`** | Includes `UserManagement`, `Logistics`, `VerificationRequests`, and `DonationApproval`. |
+| **`src/api/`** | Service-oriented classes (e.g., `admin.js`, `donation.js`) that encapsulate back-end communication. |
+| **`src/hooks/`** | Shares logic like `useVoiceRecognition` for accessibility features across the platform. |
 
 ### 5. CI/CD Pipeline
 We leverage automated workflows to maintain high code quality and reliable deployments.
