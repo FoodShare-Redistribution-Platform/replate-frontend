@@ -1,152 +1,101 @@
-# Replate Frontend Developer Documentation
+# Replate - Food Redistribution Platform (Frontend)
 
-## Table of Contents
+This repository contains the frontend web application for **Replate**, a community-driven platform designed to reduce food waste by connecting surplus food donors with NGOs and volunteers.
 
-1. [Introduction](#introduction)
-2. [About the Project](#about-the-project)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Running Tests](#running-tests)
-6. [Compatibility](#compatibility)
-7. [Project Structure Overview](#project-structure-overview)
-8. [Security Design Notes](#security-design-notes)
-9. [Limitations](#limitations)
-10. [Project Support](#project-support)
-11. [License](#license)
+---
 
-## Introduction
+## 🛠️ DevOps & Developer Documentation (DevDocs)
 
-Welcome to the frontend documentation for **FoodShare/Replate**. This application serves as the client-side interface for connecting food donors with NGOs and volunteers, facilitating the efficient redistribution of surplus food. It provides a responsive and interactive user experience for all platform roles: Donors, NGOs, and Volunteers.
+### 1. Introduction
+The **Replate Frontend** serves as the client-side interface for all platform roles. It provides a responsive and intuitive dashboard for donors to list food, NGOs to claim requests, and volunteers to manage deliveries. The goal is to facilitate seamless, real-time coordination to ensure surplus food reaches those in need efficiently.
 
-## About the Project
+### 2. System Architecture
+The frontend is built as a Single Page Application (SPA) using React and Vite. It follows a modular component-based architecture and communicates with the backend via RESTful APIs.
 
-Replate is a community-driven platform designed to reduce food waste and help those in need. The frontend is built with modern web technologies to ensure performance, scalability, and ease of maintenance.
-
-### Key Features
-*   **Role-Based Access**: Specialized interfaces for Donors (manage donations), NGOs (request food), and Volunteers (pickup & delivery).
-*   **Interactive Maps**: Real-time visualization of donation pickup locations using Leaflet.
-*   **Responsive Design**: Optimized for both desktop and mobile devices using Tailwind CSS.
-*   **Real-time Updates**: Dynamic status tracking for donations and deliveries.
-
-### tech Stack
-*   **Framework**: React (v18+) with Vite
-*   **Styling**: Tailwind CSS
-*   **State Management**: React `useState`, `useEffect`, Context API
-*   **Routing**: `react-router-dom`
-*   **HTTP Client**: `axios`
-*   **Maps**: `react-leaflet`
-
-## Installation
-
-Follow these steps to set up the development environment.
-
-### Prerequisites
-*   [Node.js](https://nodejs.org/) (v16 or higher)
-*   npm or yarn package manager
-
-### Steps
-1.  **Clone the Repository**
-    ```bash
-    git clone <repository-url>
-    cd replate-frontend
-    ```
-
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Environment Configuration**
-    Create a `.env` file in the root directory if you need to override defaults:
-    ```env
-    VITE_API_URL=http://localhost:5001
-    ```
-    *Default configuration assumes the backend is running on port 5001.*
-
-## Usage
-
-### Development Server
-Start the local development server with hot-reloading:
-```bash
-npm run dev
-```
-The application will be accessible at `http://localhost:5173`.
-
-### Production Build
-To create an optimized build for deployment:
-```bash
-npm run build
-```
-You can preview the production build locally using:
-```bash
-npm run preview
+```mermaid
+graph LR
+    User[User / Web Browser] -->|HTTPS| Frontend[React SPA / Vite]
+    Frontend -->|REST API Requests| Backend[Node.js / Express API]
+    Backend -->|Data Persistence| DB[(MongoDB)]
 ```
 
-## Running Tests
+*   **Routing**: Client-side navigation handled by `react-router-dom`.
+*   **State Management**: Optimized using React Context API and local state hooks.
+*   **Maps Integration**: Real-time visualization using `react-leaflet`.
 
-The project uses **Playwright** for End-to-End (E2E) testing.
+### 3. Technology Stack
+*   **Core Framework**: React (v19)
+*   **Build Tool**: Vite (Next-generation frontend tool)
+*   **Styling**: Tailwind CSS (Utility-first CSS framework)
+*   **Icons**: Lucide React
+*   **HTTP Client**: Axios
+*   **Testing**: Playwright (E2E testing)
 
-### Setup
-Ensure Playwright browsers are installed:
-```bash
-npx playwright install
-```
-
-### Execution
-*   **Run All Tests**:
-    ```bash
-    npx playwright test
-    ```
-*   **Interactive UI Mode**:
-    ```bash
-    npx playwright test --ui
-    ```
-*   **View Report**:
-    ```bash
-    npx playwright show-report
-    ```
-
-### Linting
-To check for code quality and style issues:
-```bash
-npm run lint
-```
-
-## Compatibility
-
-*   **Browsers**: Chrome, Firefox, Safari, Edge (Latest versions)
-*   **Node.js**: Requires Node.js v16.x or higher for development tools.
-*   **OS**: Cross-platform (Windows, macOS, Linux).
-
-## Project Structure Overview
+### 4. Repository Structure
+The project is organized to ensure maintainability and clear separation of UI, logic, and services.
 
 | Directory | Description |
 | :--- | :--- |
-| `src/api/` | Axios instances and API call functions. |
-| `src/assets/` | Static assets like images and logos. |
-| `src/components/` | Reusable UI components (Buttons, Modals, Navbars). |
-| `src/pages/` | Unique page views (Dashboard, DonateFood, Login). |
-| `src/icons/` | Custom icon components (using Lucide React). |
-| `src/App.jsx` | Main application component and routing configuration. |
-| `src/main.jsx` | Application entry point. |
-| `public/` | Public static files (favicon, manifest.json). |
+| `src/api/` | Centeralized API calls and Axios configuration. |
+| `src/components/` | Reusable UI components (Modals, Navbars, Layouts). |
+| `src/pages/` | Primary page views (Admin, Donor, NGO, Volunteer). |
+| `src/hooks/` | Custom React hooks for shared logic (Voice Recognition, etc.). |
+| `src/assets/` | Static assets including images and global styles. |
 | `tests/` | Playwright E2E test specifications. |
 
-## Security Design Notes
+### 5. CI/CD Pipeline
+We leverage automated workflows to maintain high code quality and reliable deployments.
 
-*   **Authentication**: Uses JWT (JSON Web Tokens) stored in `localStorage` (for this demo version) to manage user sessions.
-*   **Authorization**: Route protection ensures users can only access pages relevant to their role (Donor, NGO, Volunteer, Admin).
-*   **Data Protection**: All API requests to protected endpoints include the Authorization header.
+*   **Continuous Integration (CI)**:
+    - Automatically triggered on `push` and `pull_request` to `main`.
+    - Installs dependencies using `npm ci`.
+    - Runs **Playwright** E2E tests to prevent regressions.
+    - Configured in `.github/workflows/playwright.yml`.
 
-## Limitations
+*   **Continuous Deployment (CD)**:
+    - Successfully tested builds are eligible for deployment to **GitHub Pages** or **Render**.
+    - The `npm run deploy` script handles the production build and synchronization.
 
-*   **Maps**: Location services rely on loose address matching; integration with a real Geocoding API (like Google Maps API) requires valid API keys in production.
-*   **Persistence**: Browser refresh may reset non-persisted local state if not handled by the backend or local storage.
+### 6. Local Development Setup
+Follow these steps to set up the project on your local machine:
 
-## Project Support
+1. **Prerequisites**: Ensure you have [Node.js](https://nodejs.org/) (v18+) installed.
+2. **Installation**:
+   ```bash
+   npm install
+   ```
+3. **Environment**: Create a `.env` file in the root:
+   ```env
+   VITE_API_URL=http://localhost:5000
+   ```
+4. **Execution**: Start the dev server:
+   ```bash
+   npm run dev
+   ```
 
-For issues, feature requests, or contributions, please open an issue in the repository or contact the development team.
+### 7. Deployment Process
+1. **Build**: Create an optimized production bundle:
+   ```bash
+   npm run build
+   ```
+2. **Preview**: Verify the build locally:
+   ```bash
+   npm run preview
+   ```
+3. **Deploy**: Push to the `main` branch to trigger the automated deployment pipeline on the hosting provider (e.g., Render/GitHub Pages).
+
+### 8. Monitoring & Logging
+*   **Infrastructure Logs**: Build and deployment statuses are monitored through **GitHub Actions** and the hosting provider's dashboard.
+*   **Error Tracking**: Production errors are identified through browser-based console monitoring and deployment platform logs.
+*   **Performance Monitoring**: Vite's build reports provide insights into bundle sizes and asset optimization.
+
+### 9. Security Considerations
+*   **Environment variable protection**: Critical API endpoints are managed via environment variables and never exposed in the source code.
+*   **Stateless Auth**: Uses JWT (JSON Web Tokens) stored in secure browser storage for session management.
+*   **RBAC Implementation**: Frontend routing guards ensure users can only access views authorized for their specific role (Donor, NGO, Volunteer, Admin).
+*   **XSS Protection**: React's built-in data binding prevents most common cross-site scripting attacks.
+
+---
 
 ## License
-
 This project is licensed under the MIT License - see the LICENSE file for details.
