@@ -18,7 +18,7 @@ const LandingPage = () => {
                             </svg>
                         </div>
                         <span className="logo-text">
-                            food<span className="highlight">share</span>
+                            Food<span className="highlight">Share</span>
                         </span>
                     </div>
 
@@ -246,7 +246,7 @@ const LandingPage = () => {
                                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                                 </svg>
                             </div>
-                            <span className="logo-text">foodshare</span>
+                            <span className="logo-text">FoodShare</span>
                         </div>
                         <p className="footer-description">
                             Empowering communities to share surplus food safely and dignifiedly.
@@ -276,7 +276,7 @@ const LandingPage = () => {
                         <h4>Contact</h4>
                         <ul className="footer-links">
                             <li>support@foodshare.org</li>
-                            <li>+1 (555) 123-4567</li>
+                            <li>+91 1234567891</li>
                         </ul>
                     </div>
                 </div>
