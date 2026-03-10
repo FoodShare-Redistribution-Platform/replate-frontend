@@ -58,7 +58,7 @@ function DonorLiveMap() {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch("http://localhost:5001/api/map/ngos", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/map/ngos`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

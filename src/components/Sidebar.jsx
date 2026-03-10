@@ -64,23 +64,23 @@ const Sidebar = ({ user }) => {
         switch (user?.role) {
             case 'donor':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
-                    { name: t('sidebar.donateFood', 'Donate Food'), enName: 'donate food', icon: '🍱', path: '/donate-food' },
-                    { name: t('sidebar.myDonations', 'My Donations'), enName: 'my donations', icon: '📦', path: '/my-donations' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️', path: '/donor/live-map' },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Donate Food', enName: 'donate food', icon: '🍱', path: '/donate-food' },
+                    { name: 'My Donations', enName: 'my donations', icon: '📦', path: '/my-donations' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', path: '/donor/live-map' },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
                 ];
             case 'ngo':
                 return [
-                    { name: t('sidebar.dashboard', 'Dashboard'), enName: 'dashboard', icon: '📊', path: '/dashboard' },
-                    { name: t('sidebar.availableFood', 'Available Food'), enName: 'available food', icon: '🍱', path: '/available-food' },
-                    { name: t('sidebar.myRequests', 'My Requests'), enName: 'my requests', icon: '📦', path: '/my-requests' },
-                    { name: t('sidebar.liveMap', 'Live Map'), enName: 'live map', icon: '🗺️', path: '/ngo/live-map' },
-                    { name: t('sidebar.notifications', 'Notifications'), enName: 'notifications', icon: '🔔', path: '/notifications' },
-                    { name: t('sidebar.impact', 'Impact'), enName: 'impact', icon: '📈', path: '/impact' },
-                    { name: t('sidebar.profile', 'Profile'), enName: 'profile', icon: '👤', path: '/profile' }
+                    { name: 'Dashboard', enName: 'dashboard', icon: '📊', path: '/dashboard' },
+                    { name: 'Available Food', enName: 'available food', icon: '🍱', path: '/available-food' },
+                    { name: 'My Requests', enName: 'my requests', icon: '📦', path: '/my-requests' },
+                    { name: 'Live Map', enName: 'live map', icon: '🗺️', path: '/ngo/live-map' },
+                    { name: 'Notifications', enName: 'notifications', icon: '🔔', path: '/notifications' },
+                    { name: 'Impact', enName: 'impact', icon: '📈', path: '/impact' },
+                    { name: 'Profile', enName: 'profile', icon: '👤', path: '/profile' }
                 ];
             case 'volunteer':
                 return [

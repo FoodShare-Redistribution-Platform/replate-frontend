@@ -73,7 +73,7 @@ function NgoLiveMap() {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch("http://localhost:5001/api/map/donors", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/map/donors`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
