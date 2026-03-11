@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
+import ExpiredAlert from './ExpiredAlert';
 import './DashboardLayout.css';
 
 const DashboardLayoutProvider = () => {
@@ -23,6 +24,7 @@ const DashboardLayoutProvider = () => {
 
     return (
         <div className="dashboard-container">
+            <ExpiredAlert />
             <Sidebar user={user} />
             <div className="dashboard-main">
                 <Topbar user={user} />
