@@ -90,14 +90,6 @@ const MyDonations = () => {
             );
         }
 
-        // Filter out expired donations (unless delivered or cancelled)
-        filtered = filtered.filter(d => {
-            if (['delivered', 'cancelled'].includes(d.status)) return true;
-            if (!d.expiryDate || !d.expiryTime) return true;
-            const expiryDateTime = new Date(`${d.expiryDate}T${d.expiryTime}`);
-            return new Date() < expiryDateTime;
-        });
-
         setFilteredDonations(filtered);
     };
 
