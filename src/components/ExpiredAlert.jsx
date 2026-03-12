@@ -5,6 +5,16 @@ const ExpiredAlert = () => {
     const [expiredNotifications, setExpiredNotifications] = useState([]);
 
     useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                const user = JSON.parse(storedUser);
+                if (user.role === 'admin') return;
+            } catch (e) {
+                console.error("Error parsing user data", e);
+            }
+        }
+
         const fetchExpiredAlerts = async () => {
             const token = localStorage.getItem('token');
             if (!token) return;
